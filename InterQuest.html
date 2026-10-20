@@ -1,0 +1,1257 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Intermediate Exam Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: a home "map" with three ways in (stories, exam sections, memory verses); every activity is one card at a time with big tap buttons. */
+:root {
+  --bg: #e6f2f5;
+  --bg2: #d3e9ef;
+  --surface: #ffffff;
+  --ink: #15324a;
+  --muted: #56718a;
+  --line: #cbdfe7;
+  --lake: #1d7cb5;
+  --sun: #f5b523;
+  --sun-ink: #4a3300;
+  --good: #23935a;
+  --good-bg: #dcf4e6;
+  --bad: #d0412f;
+  --bad-bg: #fde4df;
+  --c-tempt: #c4802a;
+  --c-fish: #1d7cb5;
+  --c-john: #7553c4;
+  --c-prayer: #158f82;
+  --c-temple: #d4553f;
+  --c-match: #b0457f;
+  --c-exam: #2f5d8c;
+  --shadow: 0 3px 0 rgba(21, 50, 74, .14);
+  --display: "Baloo 2", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e2131; --bg2: #132c40; --surface: #183549; --ink: #eaf3f8; --muted: #9fb8c9; --line: #2a4b63;
+    --lake: #52b2e8; --sun: #f7c44a; --sun-ink: #3a2800; --good: #4fca85; --good-bg: #173f2c; --bad: #f2705f; --bad-bg: #4a2420;
+    --c-tempt: #e2a24e; --c-fish: #52b2e8; --c-john: #a58cf0; --c-prayer: #3cc3b2; --c-temple: #f07b66; --c-match: #e07ab3; --c-exam: #7fb0e0;
+    --shadow: 0 3px 0 rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e2131; --bg2: #132c40; --surface: #183549; --ink: #eaf3f8; --muted: #9fb8c9; --line: #2a4b63;
+  --lake: #52b2e8; --sun: #f7c44a; --sun-ink: #3a2800; --good: #4fca85; --good-bg: #173f2c; --bad: #f2705f; --bad-bg: #4a2420;
+  --c-tempt: #e2a24e; --c-fish: #52b2e8; --c-john: #a58cf0; --c-prayer: #3cc3b2; --c-temple: #f07b66; --c-match: #e07ab3; --c-exam: #7fb0e0;
+  --shadow: 0 3px 0 rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  background-image: radial-gradient(circle at 100% 0, var(--bg2) 0 220px, transparent 221px);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.5;
+  padding-inline: 16px;
+  padding-block: 18px 40px;
+  min-height: 100%;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; text-wrap: balance; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, .station:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+
+/* top bar */
+.bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bar .grow { flex: 1; min-width: 0; }
+.chipbtn {
+  border: 2px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 6px 14px; font-weight: 800; font-size: 15px; display: inline-flex; align-items: center; gap: 6px;
+}
+.chipbtn:hover { border-color: var(--lake); }
+.starcount { font-family: var(--display); font-weight: 800; font-size: 18px; display: inline-flex; gap: 6px; align-items: center; }
+.star { width: 22px; height: 22px; color: var(--sun); }
+
+/* home */
+.hero { display: flex; flex-direction: column; gap: 6px; }
+.hero .eyebrow { font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; color: var(--lake); }
+.hero h1 { font-size: clamp(36px, 8vw, 56px); font-weight: 800; }
+.hero h1 span { color: var(--lake); }
+.hero p { margin: 0; color: var(--muted); max-width: 56ch; }
+.jump { display: flex; gap: 8px; flex-wrap: wrap; }
+.group { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 12px; }
+.group-head { display: flex; flex-direction: column; gap: 2px; }
+.group-head h2 { font-size: 26px; font-weight: 800; }
+.group-head p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.stations { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.station {
+  --c: var(--lake);
+  text-align: left; border: 3px solid var(--c); background: var(--surface); border-radius: 20px;
+  padding: 14px 16px; display: grid; grid-template-columns: 56px 1fr; gap: 4px 12px; align-items: center;
+  box-shadow: 0 5px 0 var(--c); transition: transform .12s ease, box-shadow .12s ease; min-width: 0;
+}
+.station:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--c); }
+.station:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--c); }
+.station .ico { grid-row: span 3; width: 56px; height: 56px; border-radius: 16px; background: var(--c); color: var(--surface); display: grid; place-items: center; }
+.station .ico svg { width: 36px; height: 36px; }
+.station .ico.letter { font-family: var(--display); font-size: 30px; font-weight: 800; }
+.station h3 { font-size: 20px; }
+.station .ref { font-size: 13px; color: var(--muted); font-weight: 700; }
+.station .stars, .mini { display: flex; gap: 2px; align-items: center; font-size: 13px; font-weight: 800; color: var(--muted); }
+.station .stars svg, .mini svg { width: 18px; height: 18px; }
+.station.wide { grid-column: 1 / -1; }
+.s-on { color: var(--sun); }
+.s-off { color: var(--line); }
+
+/* cards */
+.card { background: var(--surface); border: 2px solid var(--line); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.storyhead { display: flex; gap: 14px; align-items: center; }
+.storyhead .ico { width: 64px; height: 64px; flex: none; border-radius: 18px; background: var(--c); color: var(--surface); display: grid; place-items: center; font-family: var(--display); font-size: 34px; font-weight: 800; }
+.storyhead .ico svg { width: 42px; height: 42px; }
+.storyhead h2 { font-size: clamp(26px, 6vw, 34px); }
+.storyhead .ref { color: var(--muted); font-weight: 800; font-size: 14px; }
+.story { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.story li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; }
+.story li .n { width: 30px; height: 30px; border-radius: 50%; background: var(--c); color: var(--surface); font-family: var(--display); font-weight: 800; display: grid; place-items: center; font-size: 16px; }
+.story li p { margin: 0; min-width: 0; }
+.story b, .hl { background: color-mix(in srgb, var(--sun) 35%, transparent); border-radius: 4px; padding: 0 3px; }
+.tip { background: var(--bg); border-radius: 14px; padding: 10px 14px; font-size: 15px; color: var(--muted); }
+
+.big {
+  font-family: var(--display); font-weight: 800; font-size: 21px; border: none; border-radius: 16px;
+  padding: 11px 24px; background: var(--sun); color: var(--sun-ink); box-shadow: 0 5px 0 color-mix(in srgb, var(--sun) 55%, #000);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.big:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--sun) 55%, #000); }
+.big.ghost { background: var(--surface); color: var(--ink); border: 2px solid var(--line); box-shadow: var(--shadow); }
+.big.small { font-size: 17px; padding: 8px 16px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+/* rounds list */
+.rounds { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.round { border: 3px solid var(--line); background: var(--surface); border-radius: 16px; padding: 10px 12px; text-align: left; display: flex; flex-direction: column; gap: 2px; box-shadow: var(--shadow); }
+.round:hover { border-color: var(--c); }
+.round b { font-family: var(--display); font-size: 20px; }
+.round small { color: var(--muted); font-weight: 700; }
+
+/* quiz */
+.progress { display: flex; gap: 6px; }
+.progress i { flex: 1; height: 10px; border-radius: 6px; background: var(--line); }
+.progress i.ok { background: var(--good); }
+.progress i.no { background: var(--bad); }
+.progress i.now { background: var(--c); }
+.qtop { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.kind { font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: .07em; color: var(--surface); background: var(--c); border-radius: 999px; padding: 3px 12px; }
+.streak { font-weight: 800; color: var(--c-temple); font-size: 15px; min-height: 1em; }
+.qnum { font-weight: 800; color: var(--muted); font-size: 14px; }
+.question { font-family: var(--display); font-weight: 700; font-size: clamp(23px, 5.2vw, 31px); line-height: 1.22; text-wrap: balance; overflow-wrap: anywhere; }
+.question.quote { font-style: italic; }
+.blank { display: inline-block; min-width: 3.2em; border-bottom: 4px solid var(--c); text-align: center; color: var(--c); font-style: normal; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.opt {
+  text-align: left; border: 3px solid var(--line); background: var(--surface); border-radius: 16px; padding: 12px 16px;
+  font-weight: 800; font-size: 18px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow); min-width: 0;
+}
+.opt .let { flex: none; width: 32px; height: 32px; border-radius: 10px; background: var(--bg); display: grid; place-items: center; font-family: var(--display); color: var(--muted); }
+.opt span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.opt:hover:not(:disabled) { border-color: var(--c); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-bg); }
+.opt.right .let { background: var(--good); color: var(--surface); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-bg); animation: shake .35s; }
+.opt.wrong .let { background: var(--bad); color: var(--surface); }
+.opt.dim { opacity: .55; }
+.feedback { border-radius: 16px; padding: 12px 16px; font-weight: 800; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+.feedback .msg { min-width: 0; flex: 1 1 220px; }
+.feedback .msg small { display: block; color: var(--ink); font-weight: 700; font-size: 15px; }
+@keyframes shake { 0%,100% { transform: translateX(0) } 25% { transform: translateX(-6px) } 75% { transform: translateX(6px) } }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0 } 70% { transform: scale(1.15) } 100% { transform: scale(1); opacity: 1 } }
+
+/* one-word typing */
+.typebox { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.typebox input {
+  flex: 1 1 220px; min-width: 0; font: inherit; font-size: 22px; font-weight: 800; color: var(--ink);
+  background: var(--bg); border: 3px solid var(--line); border-radius: 14px; padding: 10px 14px;
+}
+.typebox input:focus { border-color: var(--c); outline: none; }
+.typebox input.wrong { border-color: var(--bad); animation: shake .35s; }
+.typebox input.right { border-color: var(--good); background: var(--good-bg); }
+.pattern { font-family: var(--display); font-size: 24px; letter-spacing: .18em; color: var(--muted); font-weight: 800; overflow-wrap: anywhere; }
+.pattern span { color: var(--c); }
+
+/* flashcards */
+.answerbox { border: 3px dashed var(--c); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.answerbox .key { font-family: var(--display); font-weight: 800; font-size: 22px; color: var(--c); line-height: 1.25; }
+.answerbox .full { margin: 0; font-size: 16px; }
+
+/* match */
+.match { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.match .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.match .opt { font-size: 16px; padding: 10px 12px; }
+.opt.picked { border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, var(--surface)); }
+.opt.done { border-color: var(--good); background: var(--good-bg); opacity: .8; cursor: default; }
+
+/* memory verses */
+.steps { display: flex; gap: 8px; flex-wrap: wrap; }
+.step { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 800; font-size: 14px; display: inline-flex; gap: 6px; align-items: center; }
+.step.on { border-color: var(--c); background: var(--c); color: var(--surface); }
+.step .tick { color: var(--good); }
+.step.on .tick { color: var(--surface); }
+.verse { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 5vw, 28px); line-height: 1.45; overflow-wrap: anywhere; }
+.verse .ph { transition: opacity .25s ease, filter .25s ease; }
+.verse .ph.hidden { opacity: .15; filter: blur(5px); }
+.verse.covered .ph { filter: blur(9px); opacity: .35; }
+.verse .gap { display: inline-block; min-width: 2.4em; border-bottom: 4px solid var(--line); color: transparent; line-height: 1.1; text-align: center; }
+.verse .gap.now { border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); border-radius: 6px 6px 0 0; }
+.verse .gap.filled { color: var(--c); border-color: var(--c); }
+.vref { font-weight: 800; color: var(--c); font-size: 18px; }
+.built { display: flex; flex-direction: column; gap: 6px; min-height: 40px; }
+.built div { background: var(--good-bg); border-radius: 10px; padding: 6px 10px; font-weight: 700; }
+.tiles { display: flex; flex-wrap: wrap; gap: 10px; }
+.tiles .opt { font-size: 16px; padding: 10px 14px; }
+
+/* results */
+.result { text-align: center; align-items: center; }
+.bigstars { display: flex; gap: 10px; justify-content: center; }
+.bigstars svg { width: 64px; height: 64px; animation: pop .5s both; }
+.bigstars span:nth-child(2) svg { animation-delay: .25s; }
+.bigstars span:nth-child(3) svg { animation-delay: .5s; }
+.score { font-family: var(--display); font-size: 46px; font-weight: 800; color: var(--c); line-height: 1; font-variant-numeric: tabular-nums; }
+.review { text-align: left; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.review div { background: var(--bad-bg); border-radius: 12px; padding: 8px 12px; font-size: 15px; }
+.review div b { color: var(--good); }
+
+#fx { position: fixed; inset: 0; pointer-events: none; z-index: 10; width: 100%; height: 100%; }
+@media (max-width: 480px) {
+  .opts { grid-template-columns: 1fr; }
+  .match { gap: 8px; }
+  .match .opt { font-size: 14px; padding: 8px; }
+  .match .opt .let { display: none; }
+  .card { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<script>
+/* ---------- icons ---------- */
+const ICON = {
+  l1: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M5 19 20 6l15 13v15H5z" fill="currentColor" fill-opacity=".35"/><path d="M20 30s-6-4-6-8a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 8-6 8z" fill="currentColor"/></svg>',
+  l2: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M15 5h10v10h10v10H25v10H15V25H5V15h10z" fill="currentColor" fill-opacity=".35"/></svg>',
+  l3: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M20 5c6 9 11 14 11 20a11 11 0 0 1-22 0c0-6 5-11 11-20z" fill="currentColor" fill-opacity=".35"/><path d="M14 26a6 6 0 0 0 6 6"/></svg>',
+  l4: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M14 5h12M16 5v5c-5 3-8 8-8 14 0 6 5 11 12 11s12-5 12-11c0-6-3-11-8-14V5" fill="currentColor" fill-opacity=".35"/></svg>',
+  l5: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M31 5 9 35"/><path d="M27 6c2-2 5 0 4 3l-2 2" /><circle cx="12" cy="12" r="5" fill="currentColor" fill-opacity=".35"/><circle cx="29" cy="29" r="5" fill="currentColor" fill-opacity=".35"/></svg>',
+  tempt: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><circle cx="29" cy="11" r="5" fill="currentColor"/><path d="M3 34 15 15l7 10 4-5 11 14z" fill="currentColor" fill-opacity=".35"/></svg>',
+  fish: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M5 20c6-9 17-10 24 0-7 10-18 9-24 0z" fill="currentColor" fill-opacity=".35"/><path d="M29 20l7-6v12z"/><circle cx="12" cy="18" r="1.6" fill="currentColor"/></svg>',
+  john: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M6 8h28v19H18l-8 7v-7H6z" fill="currentColor" fill-opacity=".35"/><path d="M16 14a4 4 0 1 1 5 4c-1 .5-1 1.5-1 2.5"/><circle cx="20" cy="24" r="1.2" fill="currentColor"/></svg>',
+  prayer: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M20 6v28M12 34h16M6 12h28"/><path d="M6 12 2 22h8zM34 12l-4 10h8z" fill="currentColor" fill-opacity=".35"/></svg>',
+  temple: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M6 14 30 6l2 5L8 19z" fill="currentColor" fill-opacity=".35"/><path d="M10 18l-2 12M28 11l4 16"/><circle cx="16" cy="32" r="3"/><circle cx="24" cy="34" r="2.5"/></svg>',
+  verse: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M20 10c-4-3-10-4-15-3v24c5-1 11 0 15 3 4-3 10-4 15-3V7c-5-1-11 0-15 3z" fill="currentColor" fill-opacity=".35"/><path d="M20 10v24"/></svg>',
+  exam: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 6h16v8a8 8 0 0 1-16 0z" fill="currentColor" fill-opacity=".35"/><path d="M12 9H6c0 6 3 8 6 8M28 9h6c0 6-3 8-6 8M20 22v6M13 34h14M15 28h10v6"/></svg>'
+};
+const STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>';
+
+/* ---------- lessons ---------- */
+const TOPICS = {
+  l1: { title: "God First Loved Us", ref: "Lesson 1 · 1 John 4:9-10, 19; Luke 15:11-32", color: "--c-tempt",
+    story: [
+      "God showed his love for us by sending his <b>only Son</b> into the world, so that we may have life through him. <b>We love because God first loved us.</b>",
+      "A man had <b>two sons</b>. The younger one said, \"Father, give me my <b>share of the property</b> now.\"",
+      "The younger son went to a <b>country far away</b>, where he wasted his money in <b>reckless living</b>. Then a <b>severe famine</b> spread over that country.",
+      "He was sent to a farm to <b>take care of the pigs</b>. He wished he could eat the <b>bean pods</b> the pigs ate. At last he <b>came to his senses</b>.",
+      "His father saw him a long way off; his heart was <b>filled with pity</b>, and he <b>ran, threw his arms around his son, and kissed him</b>. The son said, \"Father, I have <b>sinned against God and against you</b>.\"",
+      "The father called for the <b>best robe</b>, a <b>ring</b> for his finger, <b>shoes</b> for his feet and the <b>prize calf</b> for a feast: \"he was <b>lost</b>, but now he has been <b>found</b>.\"",
+      "The <b>older son</b> was out in the <b>field</b>. He heard <b>music and dancing</b> and was <b>so angry</b> that he would not go into the house. \"Not even a <b>goat</b> for me!\"",
+      "The father answered, \"My son, you are always here with me, and <b>everything I have is yours</b>.\""
+    ]},
+  l2: { title: "The Sick Need the Doctor", ref: "Lesson 2 · 1 John 4:16-17; Mark 2:13-17", color: "--c-fish",
+    story: [
+      "<b>God is love</b>, and those who live in love live in union with God. Love is made perfect in us so that we may have <b>courage on the Judgment Day</b>.",
+      "Jesus went back to the shore of <b>Lake Galilee</b> and started teaching the crowd.",
+      "He saw a <b>tax collector</b>, <b>Levi son of Alphaeus</b>, sitting in his <b>office</b>. Jesus said, \"<b>Follow me.</b>\" Levi got up and followed him.",
+      "Jesus had a meal in <b>Levi's house</b> with many <b>tax collectors and other outcasts</b>.",
+      "Some <b>teachers of the Law, who were Pharisees</b>, asked his disciples, \"<b>Why does he eat with such people?</b>\"",
+      "Jesus answered, \"People who are <b>well</b> do not need a <b>doctor</b>, but only those who are <b>sick</b>. I have not come to call <b>respectable people</b>, but <b>outcasts</b>.\""
+    ]},
+  l3: { title: "God Loves Us All", ref: "Lesson 3 · John 4:1-42", color: "--c-john",
+    story: [
+      "Jesus <b>left Judea</b> and went back to <b>Galilee</b>; on the way he had to go through <b>Samaria</b>.",
+      "At the town of <b>Sychar</b>, Jesus, tired out, sat down by <b>Jacob's well</b>. It was about <b>noon</b>. His disciples had gone into town to <b>buy food</b>.",
+      "A <b>Samaritan woman</b> came to draw water. Jesus said, \"<b>Give me a drink of water.</b>\" She said, \"You are a <b>Jew</b>, and I am a <b>Samaritan</b>, so how can you ask me for a drink?\"",
+      "Jesus offered her <b>life-giving water</b>: \"Those who drink the water that I will give them will <b>never be thirsty again</b>... and give them <b>eternal life</b>.\"",
+      "Jesus told her she had been married to <b>five men</b>. She said, \"I see you are a <b>prophet</b>, sir.\" Jesus said, \"God is <b>Spirit</b>.\" When she spoke of the <b>Messiah</b>, Jesus said, \"<b>I am he.</b>\"",
+      "She left her <b>water jar</b> and told the town, \"Come and see the man who told me <b>everything I have ever done</b>.\" Jesus said, \"My <b>food</b> is to obey the will of the one who sent me.\"",
+      "The Samaritans begged him to stay, and he stayed <b>two days</b>. They said, \"He really is the <b>Saviour of the world</b>.\""
+    ]},
+  l4: { title: "God Forgives the Repentant", ref: "Lesson 4 · Luke 7:36-50", color: "--c-prayer",
+    story: [
+      "A <b>Pharisee</b> named <b>Simon</b> invited Jesus to have dinner with him.",
+      "A woman who lived a <b>sinful life</b> brought an <b>alabaster jar</b> full of <b>perfume</b>. She wet his feet with her <b>tears</b>, dried them with her <b>hair</b>, kissed them and poured the perfume on them.",
+      "The Pharisee said to himself, \"If this man really were a <b>prophet</b>, he would know who this woman is.\"",
+      "Jesus told a story: two men owed a moneylender <b>five hundred</b> and <b>fifty</b> silver coins. He <b>cancelled the debts of both</b>. Simon said the one forgiven <b>more</b> would love him more.",
+      "Simon gave <b>no water</b> for Jesus' feet, <b>no kiss</b> and <b>no olive oil</b>. The woman did all of these and more.",
+      "Jesus said to the woman, \"<b>Your sins are forgiven.</b>\" and \"<b>Your faith has saved you; go in peace.</b>\""
+    ]},
+  l5: { title: "God and Only God", ref: "Lesson 5 · Mark 10:17-31", color: "--c-temple",
+    story: [
+      "A man <b>ran up, knelt</b> before Jesus and asked, \"<b>Good Teacher, what must I do to receive eternal life?</b>\"",
+      "Jesus said, \"<b>No one is good except God alone.</b>\" and listed the <b>commandments</b>. The man said he had obeyed them <b>ever since he was young</b>.",
+      "Jesus looked at him <b>with love</b>: \"You need only one thing. Go and <b>sell all you have</b> and give the money to the <b>poor</b>... then come and <b>follow me</b>.\"",
+      "<b>Gloom</b> spread over his face, and he went away <b>sad</b>, because he was <b>very rich</b>.",
+      "It is much harder for a rich person to enter the Kingdom of God than for a <b>camel</b> to go through the <b>eye of a needle</b>. The disciples asked, \"<b>Who, then, can be saved?</b>\"",
+      "Jesus: \"This is impossible for human beings but not for God; <b>everything is possible for God</b>.\"",
+      "<b>Peter</b> said, \"We have <b>left everything</b> and followed you.\" Jesus promised <b>a hundred times more</b> and <b>eternal life</b>. \"Many who are now <b>first</b> will be <b>last</b>, and many who are now last will be first.\""
+    ]}
+};
+
+/* [lesson, kind, question, answer, extra, note]
+   kinds: mc, who, one (extra = other accepted answers), fill, tf, me, quote,
+   qa (answer = exact words from the lesson; extra = more of the passage), wm (word meaning, exact from the lesson) */
+const Q = [
+  // ===== A. Multiple choice
+  ["l1","mc","How did God show his love for us?","By sending his only Son into the world",["By sending angels to earth","By giving us riches","By building a temple"]],
+  ["l1","mc","Why do Christians love?","Because God first loved us",["Because they are good people","Because others love them","Because they are rich"]],
+  ["l1","mc","How many sons did the man in the parable have?","Two",["One","Three","Twelve"]],
+  ["l1","mc","What did the younger son ask his father for?","His share of the property",["A new robe","A ring","A prize calf"]],
+  ["l1","mc","Where did the younger son go with the money?","A country far away",["Jerusalem","The temple","His uncle's farm"]],
+  ["l1","mc","How did the younger son waste his money?","In reckless living",["On a new house","On the poor","On a boat"]],
+  ["l1","mc","What spread over that country?","A severe famine",["A great flood","A war","A storm"]],
+  ["l1","mc","What job was the younger son given?","Taking care of the pigs",["Looking after sheep","Fishing","Collecting taxes"]],
+  ["l1","mc","What did the younger son wish he could eat?","The bean pods the pigs ate",["Bread","Fish","Honey"]],
+  ["l1","mc","What did the father do when he saw his son a long way from home?","He ran, threw his arms around his son, and kissed him",["He waited at the door","He sent a servant to scold him","He turned away"]],
+  ["l1","mc","What did the father tell the servants to put on his son's finger?","A ring",["A bandage","A gold chain","Nothing"]],
+  ["l1","mc","What animal was killed for the feast?","The prize calf",["A goat","A lamb","A pig"]],
+  ["l1","mc","Where was the older son when his brother came home?","Out in the field",["Asleep in the house","In the city","At the well"]],
+  ["l1","mc","What did the older son hear as he came close to the house?","Music and dancing",["Crying","A trumpet","Silence"]],
+  ["l1","mc","What did the older son say his father had never given him?","Not even a goat",["A ring","A robe","Shoes"]],
+  ["l2","mc","Where was Jesus teaching the crowd?","The shore of Lake Galilee",["The temple","Jacob's well","Mount Sinai"]],
+  ["l2","mc","Who was Levi's father?","Alphaeus",["Zebedee","Jacob","Simon"]],
+  ["l2","mc","What was Levi's job?","Tax collector",["Fisherman","Shepherd","Carpenter"]],
+  ["l2","mc","Where was Levi sitting when Jesus saw him?","In his office",["In the synagogue","By the lake","At the city gate"]],
+  ["l2","mc","What did Jesus say to Levi?","Follow me",["Go home","Sell all you have","Give me a drink"]],
+  ["l2","mc","In whose house did Jesus have a meal?","Levi's house",["Simon's house","Peter's house","The Pharisee's house"]],
+  ["l2","mc","Who joined Jesus and his disciples at the table?","Tax collectors and other outcasts",["Priests and kings","Roman soldiers","Only the disciples"]],
+  ["l2","mc","Who asked, \"Why does he eat with such people?\"","Some teachers of the Law, who were Pharisees",["Levi","The crowd","Jesus' mother"]],
+  ["l2","mc","Who do not need a doctor, according to Jesus?","People who are well",["People who are sick","Outcasts","Children"]],
+  ["l2","mc","Whom did Jesus come to call?","Outcasts",["Respectable people","Kings","Priests"]],
+  ["l2","mc","According to 1 John 4:16, God is…","Love",["Angry","Far away","A judge only"]],
+  ["l3","mc","Which town in Samaria did Jesus come to?","Sychar",["Bethlehem","Nazareth","Jericho"]],
+  ["l3","mc","Whose well did Jesus sit beside?","Jacob's well",["Abraham's well","David's well","Moses' well"]],
+  ["l3","mc","What time of day was it?","About noon",["Early morning","Evening","Midnight"]],
+  ["l3","mc","Why had the disciples gone into town?","To buy food",["To find a doctor","To pray","To baptize people"]],
+  ["l3","mc","Who came to draw water at the well?","A Samaritan woman",["A Pharisee","Levi","A Roman soldier"]],
+  ["l3","mc","Who actually baptized people?","Jesus' disciples",["Jesus himself","The Pharisees","The Samaritans"]],
+  ["l3","mc","What kind of water did Jesus offer the woman?","Life-giving water",["Holy water","Salt water","Water from the Jordan"]],
+  ["l3","mc","How many men had the woman been married to?","Five",["Two","Three","Seven"]],
+  ["l3","mc","Where did the Samaritan ancestors worship God?","On this mountain",["In Jerusalem","In Egypt","At the lake"]],
+  ["l3","mc","What did the woman leave behind when she went back to town?","Her water jar",["Her bucket","Her shoes","Her coat"]],
+  ["l3","mc","How long did Jesus stay with the Samaritans?","Two days",["One night","A week","Forty days"]],
+  ["l3","mc","What did the Samaritans say Jesus really is?","The Saviour of the world",["A tax collector","A Pharisee","John the Baptist"]],
+  ["l4","mc","Who invited Jesus to dinner?","A Pharisee named Simon",["Levi","Peter","A rich young man"]],
+  ["l4","mc","What did the woman bring?","An alabaster jar full of perfume",["A basket of bread","A jar of water","A gold coin"]],
+  ["l4","mc","What did she wet Jesus' feet with?","Her tears",["Water from the well","Olive oil","Wine"]],
+  ["l4","mc","What did she dry Jesus' feet with?","Her hair",["A towel","Her robe","A cloth"]],
+  ["l4","mc","In the parable, how much did the first man owe?","Five hundred silver coins",["Fifty silver coins","A hundred gold coins","Ten silver coins"]],
+  ["l4","mc","Who did Simon say would love the moneylender more?","The one who was forgiven more",["The one who was forgiven less","Neither of them","Both the same"]],
+  ["l4","mc","What did Simon not give Jesus for his feet?","Water",["Shoes","A towel","Perfume"]],
+  ["l4","mc","What did Simon not provide for Jesus' head?","Olive oil",["A crown","A hat","Water"]],
+  ["l4","mc","What were Jesus' last words to the woman?","Your faith has saved you; go in peace",["Go and sin no more","Follow me","Do not be afraid"]],
+  ["l5","mc","What did the man do when he came up to Jesus?","He ran up and knelt before him",["He shouted from far away","He sat down to eat","He gave Jesus money"]],
+  ["l5","mc","What did the man ask Jesus?","Good Teacher, what must I do to receive eternal life?",["Where do you live?","Are you the Messiah?","Who is my neighbour?"]],
+  ["l5","mc","Who alone is good, according to Jesus?","God",["Moses","The Pharisees","The rich man"]],
+  ["l5","mc","How long had the man obeyed the commandments?","Ever since he was young",["For a week","Since last year","He never obeyed them"]],
+  ["l5","mc","To whom did Jesus tell him to give the money?","The poor",["The temple","His family","The disciples"]],
+  ["l5","mc","Why did the man go away sad?","Because he was very rich",["Because he was sick","Because he was hungry","Because Jesus was angry"]],
+  ["l5","mc","What is easier than a rich person entering the Kingdom of God?","A camel going through the eye of a needle",["A fish climbing a tree","A boat sailing on sand","A bird swimming"]],
+  ["l5","mc","What did the disciples ask one another?","Who, then, can be saved?",["Where shall we eat?","Who is the greatest?","When will the harvest come?"]],
+  ["l5","mc","Who said, \"We have left everything and followed you\"?","Peter",["Levi","John","The rich man"]],
+  ["l5","mc","How many times more will those who leave everything receive?","A hundred times more",["Two times more","Ten times more","Nothing more"]],
+
+  // ===== B. Who said to whom?
+  ["l1","who","\"Father, give me my share of the property now.\"","The younger son to his father"],
+  ["l1","who","\"Father, I have sinned against God and against you. I am no longer fit to be called your son.\"","The younger son to his father"],
+  ["l1","who","\"Hurry! Bring the best robe and put it on him.\"","The father to his servants"],
+  ["l1","who","\"Your brother has come back home.\"","A servant to the older son"],
+  ["l1","who","\"Look, all these years I have worked for you like a slave.\"","The older son to his father"],
+  ["l1","who","\"My son, you are always here with me, and everything I have is yours.\"","The father to the older son"],
+  ["l2","who","\"Follow me.\"","Jesus to Levi"],
+  ["l2","who","\"Why does he eat with such people?\"","The Pharisees to Jesus' disciples"],
+  ["l2","who","\"People who are well do not need a doctor, but only those who are sick.\"","Jesus to the Pharisees"],
+  ["l3","who","\"Give me a drink of water.\"","Jesus to the Samaritan woman"],
+  ["l3","who","\"You are a Jew, and I am a Samaritan, so how can you ask me for a drink?\"","The Samaritan woman to Jesus"],
+  ["l3","who","\"Sir, give me that water! Then I will never be thirsty again.\"","The Samaritan woman to Jesus"],
+  ["l3","who","\"Go and call your husband, and come back.\"","Jesus to the Samaritan woman"],
+  ["l3","who","\"I am he, I who am talking with you.\"","Jesus to the Samaritan woman"],
+  ["l3","who","\"Come and see the man who told me everything I have ever done.\"","The Samaritan woman to the people of the town"],
+  ["l3","who","\"Teacher, have something to eat!\"","The disciples to Jesus"],
+  ["l3","who","\"We believe now, not because of what you said, but because we ourselves have heard him.\"","The Samaritans to the woman"],
+  ["l4","who","\"Simon, I have something to tell you.\"","Jesus to Simon"],
+  ["l4","who","\"I suppose that it would be the one who was forgiven more.\"","Simon to Jesus"],
+  ["l4","who","\"Your faith has saved you; go in peace.\"","Jesus to the woman"],
+  ["l5","who","\"Good Teacher, what must I do to receive eternal life?\"","The rich man to Jesus"],
+  ["l5","who","\"You need only one thing. Go and sell all you have and give the money to the poor.\"","Jesus to the rich man"],
+  ["l5","who","\"How hard it will be for rich people to enter the Kingdom of God!\"","Jesus to his disciples"],
+  ["l5","who","\"Look, we have left everything and followed you.\"","Peter to Jesus"],
+
+  // ===== C. One-word answers (typed)
+  ["l1","one","How many sons did the man have?","Two",["2"]],
+  ["l1","one","Which son asked for his share of the property?","Younger",["younger son","the younger son"]],
+  ["l1","one","Which animals did the younger son look after?","Pigs",[]],
+  ["l1","one","What spread over the country where the younger son lived?","Famine",["severe famine","a severe famine"]],
+  ["l1","one","What did the father put on his son's finger?","Ring",["a ring"]],
+  ["l1","one","Which animal was killed for the feast?","Calf",["prize calf","the prize calf"]],
+  ["l1","one","Where was the older son?","Field",["in the field"]],
+  ["l1","one","What did the older son say he was never given?","Goat",["a goat"]],
+  ["l2","one","Beside which lake did Jesus teach?","Galilee",["lake galilee"]],
+  ["l2","one","What was the name of Levi's father?","Alphaeus",[]],
+  ["l2","one","Where was Levi sitting?","Office",["his office"]],
+  ["l2","one","In whose house did Jesus eat?","Levi",["levis house"]],
+  ["l2","one","Who do sick people need?","Doctor",["a doctor"]],
+  ["l2","one","Whom did Jesus come to call?","Outcasts",[]],
+  ["l2","one","According to 1 John 4:16, God is…","Love",[]],
+  ["l3","one","Which town in Samaria did Jesus come to?","Sychar",[]],
+  ["l3","one","At about what time did Jesus sit by the well?","Noon",["about noon"]],
+  ["l3","one","How many men had the woman been married to?","Five",["5"]],
+  ["l3","one","What did the woman leave behind?","Jar",["water jar","her water jar"]],
+  ["l3","one","How many days did Jesus stay with the Samaritans?","Two",["2"]],
+  ["l3","one","The woman said, \"I see you are a ___, sir.\"","Prophet",[]],
+  ["l3","one","What is the Hebrew word that means 'the anointed one'?","Messiah",[]],
+  ["l3","one","What is the Greek word for Messiah?","Christos",[]],
+  ["l4","one","What was the name of the Pharisee who invited Jesus?","Simon",[]],
+  ["l4","one","What was the woman's jar made of?","Alabaster",[]],
+  ["l4","one","What was the jar full of?","Perfume",[]],
+  ["l4","one","What did the woman wet Jesus' feet with?","Tears",["her tears"]],
+  ["l4","one","What did she dry his feet with?","Hair",["her hair"]],
+  ["l4","one","How many silver coins did the second man owe?","Fifty",["50"]],
+  ["l4","one","What did Simon not give for Jesus' feet?","Water",[]],
+  ["l5","one","Who alone is good?","God",[]],
+  ["l5","one","To whom should the money be given?","Poor",["the poor"]],
+  ["l5","one","Which animal goes through the eye of a needle?","Camel",[]],
+  ["l5","one","Which disciple said, \"We have left everything\"?","Peter",[]],
+  ["l5","one","How did the rich man feel when he went away?","Sad",[]],
+  ["l5","one","Many who are now first will be…","Last",[]],
+
+  // ===== D. Fill in the blanks
+  ["l1","fill","God showed his love for us by sending his only ___ into the world.","Son"],
+  ["l1","fill","We love because God first ___ us.","loved"],
+  ["l1","fill","He wasted his money in ___ living.","reckless"],
+  ["l1","fill","Then a severe ___ spread over that country.","famine"],
+  ["l1","fill","He sent him out to his farm to take care of the ___.","pigs"],
+  ["l1","fill","At last he came to his ___.","senses"],
+  ["l1","fill","His heart was filled with ___.","pity"],
+  ["l1","fill","\"Bring the best ___ and put it on him.\"","robe"],
+  ["l1","fill","\"Put a ring on his finger and ___ on his feet.\"","shoes"],
+  ["l1","fill","\"He was lost, but now he has been ___.\"","found"],
+  ["l1","fill","In the meantime the older son was out in the ___.","field"],
+  ["l1","fill","\"Not even a ___ for me to have a feast with my friends!\"","goat"],
+  ["l2","fill","God is ___, and those who live in love live in union with God.","love"],
+  ["l2","fill","Love is made perfect in us in order that we may have ___ on the Judgment Day.","courage"],
+  ["l2","fill","Jesus went back again to the shore of Lake ___.","Galilee"],
+  ["l2","fill","He saw a tax collector, Levi son of ___, sitting in his office.","Alphaeus"],
+  ["l2","fill","Levi was sitting in his ___.","office"],
+  ["l2","fill","\"People who are well do not need a ___.\"","doctor"],
+  ["l2","fill","\"…but only those who are ___.\"","sick"],
+  ["l2","fill","\"I have not come to call ___ people, but outcasts.\"","respectable"],
+  ["l3","fill","On his way to Galilee he had to go through ___.","Samaria"],
+  ["l3","fill","In Samaria he came to a town named ___.","Sychar"],
+  ["l3","fill","Jesus, tired out by the trip, sat down by the ___.","well"],
+  ["l3","fill","It was about ___.","noon"],
+  ["l3","fill","The water that I will give them will become in them a ___.","spring"],
+  ["l3","fill","\"You have been married to ___ men.\"","five"],
+  ["l3","fill","God is ___, and only by the power of his Spirit can people worship him as he really is.","Spirit"],
+  ["l3","fill","It is from the Jews that ___ comes.","salvation"],
+  ["l3","fill","\"I know that the ___ will come.\"","Messiah"],
+  ["l3","fill","Then the woman left her water ___.","jar"],
+  ["l3","fill","The crops are now ripe and ready to be ___.","harvested"],
+  ["l3","fill","\"We know that he really is the ___ of the world.\"","Saviour"],
+  ["l4","fill","She brought an ___ jar full of perfume.","alabaster"],
+  ["l4","fill","She was crying and wetting his feet with her ___.","tears"],
+  ["l4","fill","Then she dried his feet with her ___.","hair"],
+  ["l4","fill","One owed him five hundred silver coins, and the other owed him ___.","fifty"],
+  ["l4","fill","Neither of them could pay him back, so he ___ the debts of both.","cancelled"],
+  ["l4","fill","\"You did not welcome me with a ___.\"","kiss"],
+  ["l4","fill","\"You provided no olive ___ for my head.\"","oil"],
+  ["l4","fill","\"Your faith has saved you; go in ___.\"","peace"],
+  ["l5","fill","A man ran up, ___ before him, and asked him a question.","knelt"],
+  ["l5","fill","\"No one is good except ___ alone.\"","God"],
+  ["l5","fill","\"…and you will have riches in ___.\"","heaven"],
+  ["l5","fill","When the man heard this, ___ spread over his face.","gloom"],
+  ["l5","fill","He went away sad, because he was very ___.","rich"],
+  ["l5","fill","It is much harder for a rich person to enter the Kingdom of God than for a ___ to go through the eye of a needle.","camel"],
+  ["l5","fill","They will receive a ___ times more houses, brothers, sisters, mothers, children, and fields.","hundred"],
+  ["l5","fill","Many who are now first will be ___.","last"],
+
+  // ===== F. True or false
+  ["l1","tf","The man in the parable had three sons.","False"],
+  ["l1","tf","The younger son asked for his share of the property.","True"],
+  ["l1","tf","The younger son became rich in the far country.","False"],
+  ["l1","tf","The father ran to meet his younger son.","True"],
+  ["l1","tf","The older son was happy and went in to join the feast.","False"],
+  ["l1","tf","The father said his son was lost, but now has been found.","True"],
+  ["l2","tf","Levi was a fisherman.","False"],
+  ["l2","tf","Levi got up and followed Jesus.","True"],
+  ["l2","tf","Jesus had a meal in Levi's house.","True"],
+  ["l2","tf","The Pharisees were pleased that Jesus ate with outcasts.","False"],
+  ["l2","tf","Jesus said he came to call respectable people.","False"],
+  ["l3","tf","Jesus himself baptized people.","False"],
+  ["l3","tf","Jesus sat down by Jacob's well.","True"],
+  ["l3","tf","The disciples stayed with Jesus at the well.","False"],
+  ["l3","tf","Jesus told the woman that he was the Messiah.","True"],
+  ["l3","tf","Jesus stayed with the Samaritans for two days.","True"],
+  ["l4","tf","Simon was a Pharisee.","True"],
+  ["l4","tf","Simon welcomed Jesus with a kiss.","False"],
+  ["l4","tf","The woman poured perfume on Jesus' feet.","True"],
+  ["l4","tf","Jesus told the woman her sins were forgiven.","True"],
+  ["l5","tf","The rich man walked slowly up to Jesus.","False"],
+  ["l5","tf","Jesus looked straight at the man with love.","True"],
+  ["l5","tf","The rich man sold everything and followed Jesus.","False"],
+  ["l5","tf","Jesus said everything is possible for God.","True"],
+
+  // ===== G. Who am I?
+  ["l1","me","I asked my father for my share of the property and wasted it in reckless living.","The younger son",["The older son","Levi","The rich man"]],
+  ["l1","me","I saw my son a long way off. I ran, threw my arms around him and kissed him.","The father",["The older son","A servant","Simon"]],
+  ["l1","me","I was so angry that I would not go into the house.","The older son",["The younger son","Simon the Pharisee","Levi"]],
+  ["l2","me","I was a tax collector, the son of Alphaeus. When Jesus said \"Follow me,\" I got up and followed him.","Levi",["Peter","Simon","The rich man"]],
+  ["l3","me","I came to Jacob's well to draw water. I left my water jar and told the whole town about Jesus.","The Samaritan woman",["The sinful woman","The younger son","Peter"]],
+  ["l4","me","I invited Jesus to dinner, but I gave him no water for his feet.","Simon the Pharisee",["Levi","Peter","The rich man"]],
+  ["l4","me","I wet Jesus' feet with my tears and poured perfume on them.","The sinful woman",["The Samaritan woman","Martha","A servant"]],
+  ["l5","me","I had obeyed the commandments since I was young, but I went away sad because I was very rich.","The rich man",["Levi","Peter","The older son"]],
+  ["l5","me","I said to Jesus, \"Look, we have left everything and followed you.\"","Peter",["Levi","The rich man","Simon the Pharisee"]],
+
+  // ===== H. Complete the quote
+  ["l1","quote","\"We love because God first ___ us.\"","loved"],
+  ["l1","quote","\"Father, I have ___ against God and against you.\"","sinned"],
+  ["l1","quote","\"He was lost, but now he has been ___.\"","found"],
+  ["l2","quote","\"People who are well do not need a ___.\"","doctor"],
+  ["l2","quote","\"I have not come to call respectable people, but ___.\"","outcasts"],
+  ["l3","quote","\"Give me a ___ of water.\"","drink"],
+  ["l3","quote","\"I am ___, I who am talking with you.\"","he"],
+  ["l3","quote","\"My food is to obey the ___ of the one who sent me.\"","will"],
+  ["l3","quote","\"You are all one in union with Christ ___.\"","Jesus"],
+  ["l4","quote","\"Your ___ are forgiven.\"","sins"],
+  ["l4","quote","\"Your faith has saved you; go in ___.\"","peace"],
+  ["l4","quote","\"Know this: God has even ___ some of your sin.\"","forgotten"],
+  ["l5","quote","\"No one is good except ___ alone.\"","God"],
+  ["l5","quote","\"Everything is ___ for God.\"","possible"],
+  ["l5","quote","\"Many who are now first will be ___.\"","last"],
+  ["l5","quote","\"You cannot serve both God and ___.\"","money"],
+
+  // ===== J. Questions and answers (answers are the exact words of the lesson text)
+  ["l1","qa","How did God show His love for us?","\"God showed his love for us by sending his only Son into the world, so that we may have life through him.\"","\"And God showed his love for us by sending his only Son into the world, so that we may have life through him. This is what love is: it is not that we have loved God, but that he loved us and sent his Son to be the means by which our sins are forgiven.\" (1 John 4:9-10)"],
+  ["l1","qa","Why do Christians love?","\"We love because God first loved us.\"","(1 John 4:19)"],
+  ["l1","qa","What is a parable? Who told them to the people?","A parable is a story that teaches a spiritual lesson. Jesus told them to the people: \"Jesus went on to say, 'There was once a man who had two sons.'\"","","The lesson text does not define \"parable\". This meaning is a common one; check it with your teacher."],
+  ["l1","qa","What did the younger son ask his father in this parable?","\"Father, give me my share of the property now.\"","\"The younger one said to him, 'Father, give me my share of the property now.' So the man divided his property between his two sons.\""],
+  ["l1","qa","What did the younger son do with his share of property?","\"After a few days the younger son sold his part of the property and left home with the money. He went to a country far away, where he wasted his money in reckless living. He spent everything he had.\"",""],
+  ["l1","qa","What work did the younger son do when there was a famine?","\"So he went to work for one of the citizens of that country, who sent him out to his farm to take care of the pigs.\"","\"Then a severe famine spread over that country, and he was left without a thing. So he went to work for one of the citizens of that country, who sent him out to his farm to take care of the pigs.\""],
+  ["l1","qa","When did the younger son regret his actions? (What was he doing when he decided to return home?)","\"He wished he could fill himself with the bean pods the pigs ate, but no one gave him anything to eat. At last he came to his senses…\"","\"…and said, 'All my father's hired workers have more than they can eat, and here I am about to starve! I will get up and go to my father and say, \"Father, I have sinned against God and against you. I am no longer fit to be called your son; treat me as one of your hired workers.\"' So he got up and started back to his father.\""],
+  ["l1","qa","How did the father welcome his younger son?","\"He was still a long way from home when his father saw him; his heart was filled with pity, and he ran, threw his arms around his son, and kissed him.\"",""],
+  ["l1","qa","What did the younger son tell his father when he met him?","\"Father, I have sinned against God and against you. I am no longer fit to be called your son.\"",""],
+  ["l1","qa","What did the younger son receive from his father?","\"Bring the best robe and put it on him. Put a ring on his finger and shoes on his feet. Then go and get the prize calf and kill it, and let us celebrate with a feast!\"","\"But the father called to his servants. 'Hurry!' he said. 'Bring the best robe and put it on him. Put a ring on his finger and shoes on his feet. Then go and get the prize calf and kill it, and let us celebrate with a feast! For this son of mine was dead, but now he is alive; he was lost, but now he has been found.'\""],
+  ["l1","qa","Did the father ever stop loving his son?","No. \"His heart was filled with pity, and he ran, threw his arms around his son, and kissed him.\"","\"For this son of mine was dead, but now he is alive; he was lost, but now he has been found.\""],
+  ["l1","qa","What were the angry words of the older son to his father?","\"Look, all these years I have worked for you like a slave, and I have never disobeyed your orders. What have you given me? Not even a goat for me to have a feast with my friends! But this son of yours wasted all your property on prostitutes, and when he comes back home, you kill the prize calf for him!\"",""],
+  ["l1","qa","What was the father's reply to the older son?","\"My son,\" the father answered, \"you are always here with me, and everything I have is yours. But we had to celebrate and be happy, because your brother was dead, but now he is alive; he was lost, but now he has been found.\"",""],
+  ["l1","qa","What kind of emotions did the older son display? (What was his response to his brother's return?)","\"The older brother was so angry that he would not go into the house.\"","\"…so his father came out and begged him to come in. But he spoke back to his father, 'Look, all these years I have worked for you like a slave…'\"","In the lesson sheet this sentence is printed out of order. The answer shows it in the right order, using the same words."],
+  ["l1","qa","What are the two spiritual lessons you learn from this parable?","1. God loves everyone, even sinners. 2. God forgives our sins when we truly repent for our sins and ask for His forgiveness.","(From the question bank)"],
+  ["l2","qa","Where was Jesus when he was teaching the people? Where was Levi sitting?","\"Jesus went back again to the shore of Lake Galilee. A crowd came to him, and he started teaching them.\" Levi was \"sitting in his office.\"","\"As he walked along, he saw a tax collector, Levi son of Alphaeus, sitting in his office.\""],
+  ["l2","qa","Who was Levi? What was his father's name?","\"A tax collector, Levi son of Alphaeus\"",""],
+  ["l2","qa","What did Jesus Christ ask Levi to do? What did Levi do?","\"Jesus said to him, 'Follow me.' Levi got up and followed him.\"",""],
+  ["l2","qa","Who invited Jesus for a meal? Who were the other people present with Him?","\"Later on Jesus was having a meal in Levi's house. A large number of tax collectors and other outcasts were following Jesus, and many of them joined him and his disciples at the table.\"",""],
+  ["l2","qa","What did the Pharisees ask the disciples when Jesus was in the house of Levi? (Why did the teachers of the Law question Jesus?)","\"Why does he eat with such people?\"","\"Some teachers of the Law, who were Pharisees, saw that Jesus was eating with these outcasts and tax collectors, so they asked his disciples, 'Why does he eat with such people?'\""],
+  ["l2","qa","What did Jesus reply to the Pharisees who criticised him for eating with outcasts and tax collectors?","\"People who are well do not need a doctor, but only those who are sick. I have not come to call respectable people, but outcasts.\"","(Mark 2:17)"],
+  ["l2","qa","Who are referred to as \"people who are well\" and who are referred to as \"people who are sick\"?","People who are well: \"respectable people\". People who are sick: \"outcasts\". \"I have not come to call respectable people, but outcasts.\"","Word meanings: \"respectable people - well behaved, people who thought they were good.\" \"outcasts - persons rejected by family or society.\""],
+  ["l2","qa","What kind of people were tax collectors?","\"Persons who collected tax money from the Jewish people for the Roman Government; persons who were disliked as a consequence by the Jewish people.\"","\"The tax collectors usually charged more money than the Roman Government told them to collect. They kept the difference for themselves. In this way, they cheated the Jewish people and became rich.\""],
+  ["l2","qa","What are the two spiritual lessons you learn from this lesson?","1. Obeying God's call in our lives. 2. God sent His only Son Jesus Christ to save sinners and give them salvation.","(From the question bank: answer from the memory verse given for the lesson)"],
+  ["l3","qa","Which were the three divisions of the land of the Jews?","\"The land of the Jews was divided into 3 main parts, Judea in the south, Galilee in the north, and Samaria in the middle.\"","(Meaning of \"Samaria\")"],
+  ["l3","qa","Why did Jesus decide to leave Judea and go to Galilee? (Why was Jesus in Samaria?)","\"The Pharisees heard that Jesus was winning and baptizing more disciples than John. (Actually, Jesus himself did not baptize anyone; only his disciples did.) So when Jesus heard what was being said he left Judea and went back to Galilee; on his way there he had to go through Samaria.\"",""],
+  ["l3","qa","Which town in Samaria did Jesus reach and by which well did he rest?","\"In Samaria he came to a town named Sychar… Jacob's well was there, and Jesus, tired out by the trip, sat down by the well.\"","\"…which was not far from the field that Jacob had given to his son Joseph.\""],
+  ["l3","qa","Where had the disciples gone, leaving Jesus Christ by the well?","\"His disciples had gone into town to buy food.\"",""],
+  ["l3","qa","Who came to the well and why?","\"A Samaritan woman came to draw some water.\"",""],
+  ["l3","qa","What did Jesus ask the woman who came to the well?","\"Give me a drink of water.\"",""],
+  ["l3","qa","What was the Samaritan woman's reply to Jesus when He asked for water?","\"You are a Jew, and I am a Samaritan—so how can you ask me for a drink?\"","\"(Jews will not use the same cups and bowls that Samaritans use.)\""],
+  ["l3","qa","What was the reply of Jesus to the Samaritan woman's question?","\"If you only knew what God gives and who it is that is asking you for a drink, you would ask him, and he would give you life-giving water.\"",""],
+  ["l3","qa","Why was the Samaritan woman surprised to hear Jesus talk to her?","\"(Jews will not use the same cups and bowls that Samaritans use.)\"","\"Because Jesus was Jewish and a man, he broke by this act two social taboos.\""],
+  ["l3","qa","How did the woman know that Jesus Christ was a Jew?","She said, \"You are a Jew, and I am a Samaritan—so how can you ask me for a drink?\"","","The lesson text does not say how she knew. Check with your teacher what answer they expect."],
+  ["l3","qa","What type of water did Jesus promise to give the woman?","\"Those who drink this water will get thirsty again, but those who drink the water that I will give them will never be thirsty again. The water that I will give them will become in them a spring which will provide them with life-giving water and give them eternal life.\"",""],
+  ["l3","qa","What kind of water was the woman thinking and talking to Jesus about?","\"Sir,\" the woman said, \"you don't have a bucket, and the well is deep. Where would you get that life-giving water? It was our ancestor Jacob who gave us this well; he and his children and his flocks all drank from it.\"","\"Sir,\" the woman said, \"give me that water! Then I will never be thirsty again, nor will I have to come here to draw water.\""],
+  ["l3","qa","What type of life was the Samaritan woman leading? How do we know about the type of life she led? (How many times had she been married?)","\"You have been married to five men, and the man you live with now is not really your husband.\"","\"'I don't have a husband,' she answered. Jesus replied, 'You are right when you say you don't have a husband. You have been married to five men, and the man you live with now is not really your husband. You have told me the truth.'\""],
+  ["l3","qa","Why did the woman call Jesus a 'prophet'?","Because Jesus told her about her life: \"You have been married to five men, and the man you live with now is not really your husband.\" … \"I see you are a prophet, sir,\" the woman said.","Later she said, \"Come and see the man who told me everything I have ever done.\""],
+  ["l3","qa","What two things did Jesus tell her about true worship? (What enables people to offer God true worship?)","1. \"The time will come when people will not worship the Father either on this mountain or in Jerusalem.\" 2. \"By the power of God's Spirit people will worship the Father as he really is, offering him the true worship that he wants.\"","\"God is Spirit, and only by the power of his Spirit can people worship him as he really is.\""],
+  ["l3","qa","What did Jesus explain about His 'food' to the disciples?","\"My food,\" Jesus said to them, \"is to obey the will of the one who sent me and to finish the work he gave me to do.\"",""],
+  ["l3","qa","What did the Samaritan woman tell the other Samaritans?","\"Come and see the man who told me everything I have ever done. Could he be the Messiah?\"",""],
+  ["l3","qa","Why were the disciples surprised to see Jesus talking to a woman?","\"They were greatly surprised to find him talking with a woman.\" \"Because Jesus was Jewish and a man, he broke by this act two social taboos.\"","\"But none of them said to her, 'What do you want?' or asked him, 'Why are you talking with her?'\""],
+  ["l3","qa","What was the request of the Samaritans to Jesus? Why did they want Jesus to stay?","\"They begged him to stay with them, and Jesus stayed there two days.\"","\"Many of the Samaritans in that town believed in Jesus because the woman had said, 'He told me everything I have ever done.' So when the Samaritans came to him, they begged him to stay with them, and Jesus stayed there two days.\""],
+  ["l3","qa","How did the Samaritans accept Jesus? What did they call Him? (How do you know their faith grew?)","\"Many more believed because of his message, and they told the woman, 'We believe now, not because of what you said, but because we ourselves have heard him, and we know that he really is the Saviour of the world.'\"",""],
+  ["l3","qa","By which two names did the Samaritan woman call Jesus?","\"Prophet\" (\"I see you are a prophet, sir\") and \"Messiah\" (\"Could he be the Messiah?\")","She also calls him \"Sir\"."],
+  ["l3","qa","What are the three spiritual lessons you have learnt from this lesson?","1. God uses even ordinary people for His service (Samaritan woman). 2. God loves everyone alike, whatever race or creed they may belong to. 3. God has a purpose behind every happening (Jesus going through Samaria, which brought many people to Jesus).","(From the question bank)"],
+  ["l4","qa","In whose house was Jesus having dinner? (Mention his name too.)","\"A Pharisee invited Jesus to have dinner with him, and Jesus went to his house.\" His name was Simon: \"Simon, I have something to tell you.\"",""],
+  ["l4","qa","Who came there uninvited, and what did she do?","\"In that town was a woman who lived a sinful life. She heard that Jesus was eating in the Pharisee's house, so she brought an alabaster jar full of perfume and stood behind Jesus, by his feet, crying and wetting his feet with her tears. Then she dried his feet with her hair, kissed them, and poured the perfume on them.\"",""],
+  ["l4","qa","What did the Pharisee say to himself?","\"If this man really were a prophet, he would know who this woman is who is touching him; he would know what kind of sinful life she lives!\"",""],
+  ["l4","qa","What was the parable that Jesus told Simon?","\"There were two men who owed money to a moneylender,\" Jesus began. \"One owed him five hundred silver coins, and the other owed him fifty. Neither of them could pay him back, so he cancelled the debts of both. Which one, then, will love him more?\"","\"I suppose,\" answered Simon, \"that it would be the one who was forgiven more.\" \"You are right,\" said Jesus.","In the lesson sheet some lines of this parable are printed out of order. The answer shows the sentences in the right order, using the same words."],
+  ["l4","qa","What was the point Jesus Christ made through this parable?","\"The great love she has shown proves that her many sins have been forgiven. But whoever has been forgiven little shows only a little love.\"",""],
+  ["l4","qa","How did Jesus compare the welcome given to Him by Simon and the uninvited guest?","\"I came into your home, and you gave me no water for my feet, but she has washed my feet with her tears and dried them with her hair. You did not welcome me with a kiss, but she has not stopped kissing my feet since I came. You provided no olive oil for my head, but she has covered my feet with perfume.\"",""],
+  ["l4","qa","When do we show greater love for God?","When many sins are forgiven: \"The great love she has shown proves that her many sins have been forgiven. But whoever has been forgiven little shows only a little love.\"","\"I suppose,\" answered Simon, \"that it would be the one who was forgiven more.\""],
+  ["l4","qa","What two things did Jesus tell the sinful woman?","1. \"Your sins are forgiven.\" 2. \"Your faith has saved you; go in peace.\"",""],
+  ["l4","qa","What are the two spiritual lessons you have learnt from this lesson?","1. Jesus Christ forgives our sins if we truly repent and feel sorry for our sins. 2. The one whose many sins are forgiven show greater love for the Lord.","(From the question bank)"],
+  ["l5","qa","What did the rich young man ask Jesus?","\"Good Teacher, what must I do to receive eternal life?\"",""],
+  ["l5","qa","What did Jesus reply to him?","\"Why do you call me good?\" Jesus asked him. \"No one is good except God alone. You know the commandments: 'Do not commit murder, do not commit adultery; do not steal; do not accuse anyone falsely; do not cheat; respect your father and your mother.'\"",""],
+  ["l5","qa","What were the thoughts of the rich young man about how one could attain eternal life?","He thought it was by obeying the commandments: \"Teacher,\" the man said, \"ever since I was young, I have obeyed all these commandments.\"",""],
+  ["l5","qa","What did Jesus ask the man to do apart from keeping the commandments, and why couldn't he do it?","\"You need only one thing. Go and sell all you have and give the money to the poor and you will have riches in heaven; then come and follow me.\" He couldn't, \"because he was very rich.\"",""],
+  ["l5","qa","Why did the rich young man become sad?","\"When the man heard this, gloom spread over his face, and he went away sad, because he was very rich.\"",""],
+  ["l5","qa","What did Jesus tell His disciples about riches and the Kingdom of God?","\"How hard it will be for rich people to enter the Kingdom of God!\" … \"It is much harder for a rich person to enter the Kingdom of God than for a camel to go through the eye of a needle.\"",""],
+  ["l5","qa","What did the disciples of Jesus Christ ask Him?","\"Who, then, can be saved?\"",""],
+  ["l5","qa","According to Jesus, how can one be saved or receive the Kingdom of God?","\"This is impossible for human beings but not for God; everything is possible for God.\"",""],
+  ["l5","qa","What did Peter tell Jesus?","\"Look, we have left everything and followed you.\"",""],
+  ["l5","qa","What did Jesus tell him in return?","\"Those who leave home or brothers or sisters or mother or father or children or fields for me and for the gospel, will receive much more in this present age. They will receive a hundred times more houses, brothers, sisters, mothers, children, and fields and persecutions as well; and in the age to come they will receive eternal life.\"",""],
+  ["l5","qa","According to Jesus Christ, who will be first and who will be last?","\"But many who are now first will be last, and many who are now last will be first.\"",""],
+
+  // ===== K. Word meanings (exact from the lesson)
+  ["l1","wm","means by which","the way",""],
+  ["l1","wm","reckless","not caring about danger, very careless",""],
+  ["l1","wm","severe famine","extreme scarcity of food",""],
+  ["l1","wm","citizens","people who belong to a country",""],
+  ["l1","wm","hired workers","persons who work for wages",""],
+  ["l1","wm","starve","to feel very hungry",""],
+  ["l1","wm","celebrate","to do something to show that one is happy about some event or day",""],
+  ["l1","wm","feast","a large meal to celebrate a happy occasion",""],
+  ["l2","wm","union with God","being one with God, being joined together with God",""],
+  ["l2","wm","tax collectors","persons who collected tax money from the Jewish people for the Roman Government; persons who were disliked as a consequence by the Jewish people.","The tax collectors usually charged more money than the Roman Government told them to collect. They kept the difference for themselves. In this way, they cheated the Jewish people and became rich."],
+  ["l2","wm","outcasts","persons rejected by family or society.","In the gospels, this name refers to those Jews who have been excluded from synagogue worship, because they violated rules about foods that should not be eaten and about associating with people who were not Jews. Jesus was criticized for associating with them."],
+  ["l2","wm","Pharisees","a group of men who were strict in following every law of the Jews.","They also obeyed many laws that they made up themselves. Jesus angered them because he did not follow all their laws."],
+  ["l2","wm","disciple","a follower or learner, especially a follower of Jesus",""],
+  ["l2","wm","respectable people","well behaved, people who thought they were good.",""],
+  ["l3","wm","Samaria","The land of the Jews was divided into 3 main parts, Judea in the south, Galilee in the north, and Samaria in the middle",""],
+  ["l3","wm","Samaritan","a person who came from Samaria. The Samaritans were only partly Jewish. They worshipped God differently from the other Jews.","As a consequence, the Jews from Galilee and Judea hated the Samaritans and travelled around Samaria rather than go through it. Jesus, however, travelled through Samaria and brought the good news of salvation to the woman at the well and the Samaritans of her town."],
+  ["l3","wm","life-giving water","eternal life",""],
+  ["l3","wm","ancestor","a person's grandparents, great-grandparents, etc.",""],
+  ["l3","wm","spring","place where water wells up from the earth",""],
+  ["l3","wm","eternal life","God's quality of life; a life that never ends; a life that lasts forever",""],
+  ["l3","wm","prophet","a person who receives messages from God and tells those messages to God's people. A person who discerns God's message.",""],
+  ["l3","wm","Messiah","is a Hebrew word which means the 'anointed one'; in Greek the word is 'Christos': it refers to the long awaited Saviour and deliverer of the Jewish people.",""],
+  ["l4","wm","Pharisee","a group of men who were strict in following every law of the Jews.","They also obeyed many laws that they made up themselves. Jesus angered them because he did not follow all their laws."],
+  ["l4","wm","alabaster","striped, creamy coloured hard stone material that can be made into bottles, jars, and vases.","In biblical times perfume was often kept in alabaster jars."],
+  ["l4","wm","prophet","person who receives messages from God and tells the messages to God's people.",""],
+  ["l5","wm","eternal life","God's quality of life, life in God, life that does not end, life that lasts forever",""],
+  ["l5","wm","Kingdom of God","God's rule in the lives of people and the created order",""],
+  ["l5","wm","eye of a needle","a metaphor for how difficult it is for a rich man to enter the Kingdom of God.","Possibly an opening in the city wall just big enough for a person to squeeze through after the city gates are locked at night. However, there is no widely accepted evidence of such a gate."]
+];
+
+// E. Match the following
+const MATCH_SETS = [
+  { name: "Which lesson?", pairs: [["Luke 15","The lost son"],["Mark 2","Levi follows Jesus"],["John 4","The Samaritan woman"],["Luke 7","The woman with the perfume"],["Mark 10","The rich young man"]] },
+  { name: "Memory verses", pairs: [["1 John 4:19","We love because God first loved us"],["Mark 2:17","People who are well do not need a doctor"],["Galatians 3:28","You are all one in union with Christ Jesus"],["Job 11:6","God has even forgotten some of your sin"],["Matthew 6:24","You cannot serve both God and money"]] },
+  { name: "Who did what?", pairs: [["Younger son","Took care of the pigs"],["Levi","Sat in his tax office"],["Samaritan woman","Left her water jar"],["Sinful woman","Poured perfume on Jesus' feet"],["Rich man","Went away sad"]] },
+  { name: "Where was it?", pairs: [["Sychar","A town in Samaria"],["Lake Galilee","Where Jesus called Levi"],["Jacob's well","Where Jesus sat down, tired"],["A country far away","Where the younger son wasted his money"],["Simon's house","Where Jesus had dinner"]] },
+  { name: "Word meanings 1", pairs: [["reckless","not caring about danger, very careless"],["severe famine","extreme scarcity of food"],["citizens","people who belong to a country"],["hired workers","persons who work for wages"],["starve","to feel very hungry"]] },
+  { name: "Word meanings 2", pairs: [["disciple","a follower or learner, especially a follower of Jesus"],["outcasts","persons rejected by family or society"],["respectable people","well behaved, people who thought they were good"],["union with God","being one with God, being joined together with God"],["Pharisees","a group of men who were strict in following every law of the Jews"]] },
+  { name: "Word meanings 3", pairs: [["life-giving water","eternal life"],["ancestor","a person's grandparents, great-grandparents, etc."],["spring","place where water wells up from the earth"],["Messiah","the 'anointed one'"],["prophet","a person who receives messages from God and tells those messages to God's people"]] },
+  { name: "Word meanings 4", pairs: [["alabaster","striped, creamy coloured hard stone"],["Kingdom of God","God's rule in the lives of people and the created order"],["eye of a needle","a metaphor for how difficult it is for a rich man to enter the Kingdom of God"],["feast","a large meal to celebrate a happy occasion"],["means by which","the way"]] }
+];
+
+const KIND_LABEL = { mc: "Pick one", tf: "True or false?", fill: "Fill the gap", who: "Who said to whom?", me: "Who am I?", one: "One-word answer", quote: "Complete the quote", qa: "Question and answer", wm: "Word meaning" };
+
+const SECTIONS = [
+  { k: "mc",    letter: "A", title: "Multiple choice",     color: "--c-tempt",  about: "Pick the right answer from four." },
+  { k: "who",   letter: "B", title: "Who said to whom?",   color: "--c-fish",   about: "Read the words. Who said them, and who were they talking to?" },
+  { k: "one",   letter: "C", title: "One-word answers",    color: "--c-john",   about: "Type the answer. The dashes show how many letters. Stuck? Tap Hint." },
+  { k: "fill",  letter: "D", title: "Fill in the blanks",  color: "--c-prayer", about: "Pick the word from the Bible text that fits the gap." },
+  { k: "match", letter: "E", title: "Match the following", color: "--c-temple", about: "Tap something on the left, then the thing on the right that goes with it." },
+  { k: "tf",    letter: "F", title: "True or false",       color: "--c-match",  about: "Is it true or false?" },
+  { k: "me",    letter: "G", title: "Who am I?",           color: "--c-exam",   about: "Read the clues and guess who is talking." },
+  { k: "quote", letter: "H", title: "Complete the quote",  color: "--c-fish",   about: "Finish the famous words from the lessons." },
+  { k: "qa",    letter: "J", title: "Questions and answers", color: "--c-tempt", about: "These are the exam questions from the question bank. The answers are the exact words of the lesson text. Say or write your answer, then tap Show answer and check it word for word." },
+  { k: "wm",    letter: "K", title: "Word meanings",       color: "--c-john",   about: "Say what the word means, then tap Show answer. The meanings are exactly as given in the lessons." }
+];
+
+/* ---------- memory verses ---------- */
+const VERSES = [
+  { ref: "1 John 4:19", story: "l1", parts: ["We love", "because God", "first loved us."] },
+  { ref: "Mark 2:17", story: "l2", parts: ["Jesus heard them and answered,", "\"People who are well", "do not need a doctor,", "but only those who are sick.", "I have not come", "to call respectable people,", "but outcasts.\""] },
+  { ref: "Galatians 3:28", story: "l3", parts: ["So there is no difference", "between Jews and Gentiles,", "between slaves and free men,", "between men and women;", "you are all one", "in union with Christ Jesus."] },
+  { ref: "Job 11:6", story: "l4", parts: ["… Know this:", "God has even forgotten", "some of your sin."] },
+  { ref: "Matthew 6:24", story: "l5", parts: ["No one can be a slave of two masters;", "he will hate one and love the other,", "he will be loyal to one", "and despise the other.", "You cannot serve both God and money."] }
+];
+
+
+const WHO_PAIRS = [...new Set(Q.filter(r => r[1] === "who").map(r => r[3]))];
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const STATIONS = ["l1","l2","l3","l4","l5"];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+function load(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; } }
+function store(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+let best = load("ieq-best", {});
+let vdone = load("ieq-vdone", {});
+function saveBest(id, stars) { if ((best[id] || 0) >= stars) return; best[id] = stars; store("ieq-best", best); }
+let soundOn = load("ieq-sound", true) !== false;
+
+function colorOf(id) {
+  if (TOPICS[id]) return TOPICS[id].color;
+  if (id.startsWith("sec-")) return SECTIONS.find(s => s.k === id.split("-")[1]).color;
+  if (/^v\d$/.test(id)) return TOPICS[VERSES[+id[1]].story].color;
+  if (id === "vquiz") return "--c-match";
+  return "--c-exam";
+}
+function setColor(id) { app.style.setProperty("--c", `var(${colorOf(id)})`); }
+
+/* Split a section's questions into rounds of about 10, in sheet order */
+function roundsOf(list, size = 10) {
+  const n = Math.max(1, Math.ceil(list.length / size)), base = Math.floor(list.length / n), extra = list.length % n, out = [];
+  for (let r = 0, i = 0; r < n; r++) { const len = base + (r < extra ? 1 : 0); out.push(list.slice(i, i + len)); i += len; }
+  return out;
+}
+function sectionRounds(k) { return k === "match" ? roundsOf(MATCH_SETS, 3) : roundsOf(Q.filter(r => r[1] === k)); }
+
+/* ---------- sound ---------- */
+let actx = null;
+function tone(freqs, dur = .12, type = "sine") {
+  if (!soundOn) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    freqs.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.value = f;
+      const t = actx.currentTime + i * dur;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.18, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur + .02);
+    });
+  } catch (e) {}
+}
+const sndGood = () => tone([660, 880], .1);
+const sndBad = () => tone([220, 180], .14, "triangle");
+const sndWin = () => tone([523, 659, 784, 1047], .12);
+const canSpeak = "speechSynthesis" in window;
+function speak(text) {
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = .85; speechSynthesis.speak(u); } catch (e) {}
+}
+
+/* ---------- confetti ---------- */
+const fx = $("#fx"), ctx = fx.getContext("2d");
+let parts = [], raf = 0;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti(n = 40, x = innerWidth / 2, y = innerHeight / 3) {
+  if (reduce) return;
+  fx.width = innerWidth; fx.height = innerHeight;
+  const cs = getComputedStyle(document.documentElement);
+  const cols = ["--sun","--c-fish","--c-temple","--c-prayer","--c-john","--c-tempt"].map(v => cs.getPropertyValue(v).trim());
+  for (let i = 0; i < n; i++) parts.push({ x, y, vx: (Math.random() - .5) * 12, vy: -Math.random() * 11 - 3, r: Math.random() * 6 + 4, c: cols[i % cols.length], a: Math.random() * 6, life: 90 });
+  if (!raf) loop();
+}
+function loop() {
+  ctx.clearRect(0, 0, fx.width, fx.height);
+  parts.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.a += .2; p.life--; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); ctx.restore(); });
+  parts = parts.filter(p => p.life > 0 && p.y < fx.height + 20);
+  raf = parts.length ? requestAnimationFrame(loop) : 0;
+  if (!raf) ctx.clearRect(0, 0, fx.width, fx.height);
+}
+function burstAt(el, n) { const r = el.getBoundingClientRect(); confetti(n, r.left + r.width / 2, r.top); }
+
+/* ---------- shared bits ---------- */
+function totalStars() { return Object.values(best).reduce((a, b) => a + b, 0); }
+function topBar(back) {
+  return `<div class="bar">
+    ${back ? `<button class="chipbtn" data-act="${back}">&larr; ${back === "home" ? "Home" : "Back"}</button>` : ""}
+    <div class="grow"></div>
+    <span class="starcount" title="Stars collected"><span class="star">${STAR}</span>${totalStars()}</span>
+    <button class="chipbtn" data-act="sound" aria-pressed="${soundOn}">${soundOn ? "Sound on" : "Sound off"}</button>
+  </div>`;
+}
+const starIcons = (n, of = 3) => Array.from({ length: of }, (_, i) => `<span class="${i < n ? "s-on" : "s-off"}">${STAR}</span>`).join("");
+const starsRow = n => `<span class="stars" aria-label="${n} of 3 stars">${starIcons(n)}</span>`;
+let backTo = "home";
+
+/* ---------- home ---------- */
+function home() {
+  backTo = "home";
+  app.style.removeProperty("--c");
+  const tile = (id, icon, title, sub, extra = "", cls = "") => `<button class="station ${cls}" style="--c: var(${colorOf(id)})" data-act="open" data-id="${id}">
+      <span class="ico${icon.length < 3 ? " letter" : ""}">${icon.length < 3 ? icon : ICON[icon]}</span><h3>${title}</h3><span class="ref">${sub}</span>${extra}</button>`;
+  const secStars = k => { const r = sectionRounds(k); const got = r.reduce((a, _, i) => a + (best[`sec-${k}-${i + 1}`] || 0), 0); return `<span class="mini"><span class="s-on">${STAR}</span>${got} / ${r.length * 3}</span>`; };
+  app.innerHTML = topBar(false) + `
+    <header class="hero">
+      <span class="eyebrow">Intermediate 2026 · Sunday School</span>
+      <h1>Exam <span>Quest</span></h1>
+      <p>Three ways to get ready: learn each lesson, practise every kind of exam question, and learn your memory verses. Collect stars as you go!</p>
+    </header>
+    <nav class="jump" aria-label="Jump to">
+      <button class="chipbtn" data-act="jump" data-id="g-stories">Lessons</button>
+      <button class="chipbtn" data-act="jump" data-id="g-sections">Exam practice</button>
+      <button class="chipbtn" data-act="jump" data-id="g-verses">Memory verses</button>
+    </nav>
+
+    <section class="group" id="g-stories">
+      <div class="group-head"><h2>1. Learn the lessons</h2><p>Read the lesson card, then answer 10 mixed questions about it.</p></div>
+      <div class="stations">${STATIONS.map(id => tile(id, id, TOPICS[id].title, TOPICS[id].ref, starsRow(best[id] || 0))).join("")}</div>
+    </section>
+
+    <section class="group" id="g-sections">
+      <div class="group-head"><h2>2. Practise like the exam</h2><p>Every kind of exam question in short rounds. Section J has every question from the question bank, answered in the exact words of the lesson text.</p></div>
+      <div class="stations">
+        ${SECTIONS.map(s => { const n = s.k === "match" ? MATCH_SETS.length + " sets" : Q.filter(r => r[1] === s.k).length + " questions"; return tile(`sec-${s.k}`, s.letter, s.title, `${n} · ${sectionRounds(s.k).length} rounds`, secStars(s.k)); }).join("")}
+        ${tile("exam", "exam", "Big Exam Challenge", "20 questions from every lesson, all mixed up", starsRow(best.exam || 0), "wide")}
+      </div>
+    </section>
+
+    <section class="group" id="g-verses">
+      <div class="group-head"><h2>3. Memory verses</h2><p>Learn each verse in 4 easy steps: read it, put it in order, fill the gaps, then say the whole verse.</p></div>
+      <div class="stations">
+        ${VERSES.map((v, i) => tile(`v${i}`, "verse", v.ref, esc(v.parts[0].replace(/[,:;]$/, "")) + "…", starsRow(best[`v${i}`] || 0))).join("")}
+        ${tile("vquiz", "verse", "Verse Challenge", "Which verse is it? What comes next?", starsRow(best.vquiz || 0))}
+      </div>
+    </section>`;
+}
+
+/* ---------- intro screens ---------- */
+function storyCard(id) {
+  backTo = "home"; setColor(id);
+  const t = TOPICS[id];
+  app.innerHTML = topBar("home") + `
+    <section class="card">
+      <div class="storyhead"><span class="ico">${ICON[id]}</span><div><h2>${t.title}</h2><div class="ref">${t.ref}</div></div></div>
+      <ol class="story">${t.story.map((s, i) => `<li><span class="n">${i + 1}</span><p>${s}</p></li>`).join("")}</ol>
+      <div class="tip">The highlighted words are the important ones for the exam. Read them out loud!</div>
+      <div class="row"><button class="big" data-act="start" data-id="${id}">Start the quiz</button></div>
+    </section>`;
+  scrollTo(0, 0);
+}
+function sectionPage(k) {
+  backTo = "home"; setColor(`sec-${k}`);
+  const s = SECTIONS.find(x => x.k === k), rounds = sectionRounds(k);
+  let at = 1;
+  const items = rounds.map((r, i) => {
+    const from = at, to = at + r.length - 1; at = to + 1;
+    const unit = k === "match" ? (r.length === 1 ? "set" : "sets") : "questions";
+    return `<button class="round" data-act="start" data-id="sec-${k}-${i + 1}"><b>Round ${i + 1}</b><small>${k === "match" ? r.length + " " + unit : "Questions " + from + "–" + to}</small><span class="mini">${starIcons(best[`sec-${k}-${i + 1}`] || 0)}</span></button>`;
+  }).join("");
+  app.innerHTML = topBar("home") + `
+    <section class="card">
+      <div class="storyhead"><span class="ico">${s.letter}</span><div><h2>${s.title}</h2><div class="ref">Section ${s.letter}</div></div></div>
+      <p style="margin:0">${s.about}</p>
+      <div class="rounds">${items}</div>
+      <div class="tip">Play the rounds in order to cover every question. Get 3 stars on each round and you've learned the whole section!</div>
+    </section>`;
+  scrollTo(0, 0);
+}
+function examIntro() {
+  backTo = "home"; setColor("exam");
+  app.innerHTML = topBar("home") + `
+    <section class="card">
+      <div class="storyhead"><span class="ico">${ICON.exam}</span><div><h2>Big Exam Challenge</h2><div class="ref">All five lessons mixed together</div></div></div>
+      <p style="margin:0">20 questions, 4 from each lesson, in every style from the exam. Can you get 18 or more for 3 stars?</p>
+      <div class="row"><button class="big" data-act="start" data-id="exam">Let's go!</button></div>
+    </section>`;
+  scrollTo(0, 0);
+}
+
+/* ---------- quiz engine ---------- */
+let quiz = null;
+const norm = s => String(s).toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9 ]/g, "").replace(/^\s*the\s+/, "").replace(/\s+/g, "");
+function typedOk(input, cur) {
+  const b = norm(input); if (!b) return false;
+  return [cur.a, ...(cur.alts || [])].some(x => { const a = norm(x); return a === b || a.replace(/s$/, "") === b.replace(/s$/, ""); });
+}
+function makeQuestion(row) {
+  const [topic, k, q, a, o] = row;
+  const base = { topic, k, q, a };
+  if (k === "tf") return { ...base, opts: ["True", "False"] };
+  if (k === "one") return { ...base, alts: o || [], tries: 0, shown: 1 };
+  if (k === "qa" || k === "wm") return { ...base, full: o, note: row[5] };
+  if (k === "who") {
+    const [x, y] = a.split(" to "), rev = `${y} to ${x}`;
+    const others = shuffle(WHO_PAIRS.filter(p => p !== a && p !== rev));
+    return { ...base, opts: shuffle([a, ...(WHO_PAIRS.includes(rev) ? [rev] : []), ...others].slice(0, 4)) };
+  }
+  if ((k === "fill" || k === "quote") && !o) {
+    const upper = /^[A-Z]/.test(a);
+    const pool = list => [...new Set(list.filter(r => (r[1] === "fill" || r[1] === "quote") && !r[4]).map(r => r[3]))]
+      .filter(w => w.toLowerCase() !== a.toLowerCase() && /^[A-Z]/.test(w) === upper);
+    let d = shuffle(pool(Q.filter(r => r[0] === topic)));
+    if (d.length < 3) d = d.concat(shuffle(pool(Q)).filter(w => !d.includes(w)));
+    return { ...base, opts: shuffle([a, ...d.slice(0, 3)]) };
+  }
+  return { ...base, opts: shuffle([a, ...o]) };
+}
+function mixedPick(rows, n) {
+  const byKind = {};
+  shuffle(rows).forEach(r => (byKind[r[1]] = byKind[r[1]] || []).push(r));
+  const out = [], kinds = Object.keys(byKind);
+  while (out.length < n && kinds.some(k => byKind[k].length))
+    for (const k of shuffle(kinds)) if (byKind[k].length && out.length < n) out.push(byKind[k].pop());
+  return shuffle(out);
+}
+function start(id) {
+  if (id.startsWith("sec-")) {
+    const [, k, n] = id.split("-"), round = sectionRounds(k)[+n - 1];
+    backTo = "back-sec-" + k;
+    if (k === "match") return startMatch(id, round);
+    return runQuiz(id, (k === "qa" || k === "wm" ? round : shuffle(round)).map(makeQuestion));
+  }
+  if (id === "vquiz") { backTo = "home"; return runQuiz(id, verseQuestions()); }
+  if (/^v\d$/.test(id)) return verseScreen(+id[1], 1);
+  backTo = "home";
+  if (id === "exam") return runQuiz(id, shuffle(STATIONS.flatMap(t => mixedPick(Q.filter(r => r[0] === t && r[1] !== "qa" && r[1] !== "wm"), 4))).map(makeQuestion));
+  return runQuiz(id, mixedPick(Q.filter(r => r[0] === id && r[1] !== "qa" && r[1] !== "wm"), 10).map(makeQuestion));
+}
+function runQuiz(id, list) {
+  setColor(id);
+  quiz = { id, list, i: 0, score: 0, streak: 0, results: [], missed: [] };
+  renderQ();
+}
+function qHeader() {
+  const z = quiz, cur = z.list[z.i];
+  return `<div class="progress" aria-label="Question ${z.i + 1} of ${z.list.length}">${z.list.map((_, i) => `<i class="${z.results[i] === true ? "ok" : z.results[i] === false ? "no" : i === z.i ? "now" : ""}"></i>`).join("")}</div>
+    <div class="qtop"><span class="kind">${cur.label || KIND_LABEL[cur.k]}</span><span class="streak" id="streak">${z.streak >= 2 ? z.streak + " in a row!" : ""}</span><span class="qnum">${z.i + 1} of ${z.list.length}</span></div>`;
+}
+function renderQ() {
+  const z = quiz, cur = z.list[z.i];
+  const blanky = cur.k === "fill" || cur.k === "quote";
+  const qHtml = blanky ? esc(cur.q).replace("___", `<span class="blank" id="blank">?</span>`) : cur.k === "wm" ? `What does <span class="hl">${esc(cur.q)}</span> mean?` : esc(cur.q);
+  let body;
+  if (cur.k === "one") {
+    body = `<div class="pattern" id="pattern" aria-label="${cur.a.length} letters">${patternHtml(cur)}</div>
+      <form class="typebox" id="typeform" autocomplete="off">
+        <input id="typed" type="text" inputmode="text" autocapitalize="off" spellcheck="false" placeholder="Type your answer" aria-label="Your answer">
+        <button class="big" type="submit">Check</button>
+        <button class="big ghost small" type="button" data-act="hint">Hint</button>
+      </form>`;
+  } else if (cur.k === "qa" || cur.k === "wm") {
+    body = `<div id="qabox"><div class="tip">Say your answer out loud (or write it down). Then check!</div></div>
+      <div class="row" id="qabtns"><button class="big" data-act="reveal">Show answer</button></div>`;
+  } else {
+    body = `<div class="opts">${cur.opts.map((o, i) => `<button class="opt" data-act="answer" data-i="${i}"><span class="let">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+  }
+  app.innerHTML = topBar(backTo) + `
+    <section class="card">
+      ${qHeader()}
+      <div class="question ${cur.k === "who" || cur.k === "quote" ? "quote" : ""}">${qHtml}</div>
+      ${body}
+      <div id="fb"></div>
+    </section>`;
+  const focusEl = app.querySelector("#typed") || app.querySelector(".opt") || app.querySelector('[data-act="reveal"]');
+  if (focusEl) focusEl.focus({ preventScroll: true });
+  const form = $("#typeform");
+  if (form) form.addEventListener("submit", e => { e.preventDefault(); checkTyped(); });
+}
+function patternHtml(cur) {
+  let shown = 0;
+  return [...cur.a].map(ch => /[a-z0-9]/i.test(ch) ? (shown++ < cur.shown ? `<span>${esc(ch.toUpperCase())}</span>` : "_") : (ch === " " ? "&nbsp;&nbsp;" : esc(ch))).join(" ");
+}
+const PRAISE = ["Great job!", "You got it!", "Super!", "Well done!", "Yes, that's right!", "Brilliant!", "Amazing!"];
+function record(ok, el) {
+  const z = quiz, cur = z.list[z.i];
+  z.results[z.i] = ok;
+  if (ok) { z.score++; z.streak++; sndGood(); if (el) burstAt(el, z.streak >= 3 ? 40 : 18); }
+  else { z.streak = 0; sndBad(); z.missed.push(cur); }
+  const st = $("#streak"); if (st) st.textContent = z.streak >= 2 ? z.streak + " in a row!" : "";
+}
+function showFeedback(ok, extra = "") {
+  const z = quiz, cur = z.list[z.i], last = z.i === z.list.length - 1;
+  $("#fb").innerHTML = `<div class="feedback ${ok ? "good" : "bad"}">
+      <div class="msg">${ok ? pick(PRAISE) : "Not quite!"}${ok ? extra : `<small>The answer is: ${esc(cur.a)}</small>`}</div>
+      <button class="big" data-act="next">${last ? "See my stars" : "Next"}</button></div>`;
+  $("#fb button").focus({ preventScroll: true });
+  $("#fb").scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+}
+function answer(i, btn) {
+  const z = quiz, cur = z.list[z.i];
+  if (z.results[z.i] !== undefined) return;
+  const ok = cur.opts[i] === cur.a;
+  app.querySelectorAll(".opt").forEach((b, j) => { b.disabled = true; if (cur.opts[j] === cur.a) b.classList.add("right"); else if (j !== i) b.classList.add("dim"); });
+  const blank = $("#blank"); if (blank) blank.textContent = cur.a;
+  if (!ok) btn.classList.add("wrong");
+  record(ok, btn);
+  showFeedback(ok);
+}
+function checkTyped() {
+  const z = quiz, cur = z.list[z.i], inp = $("#typed");
+  if (z.results[z.i] !== undefined || !inp.value.trim()) { inp.focus(); return; }
+  if (typedOk(inp.value, cur)) {
+    inp.classList.remove("wrong"); inp.classList.add("right"); inp.disabled = true;
+    cur.shown = 99; $("#pattern").innerHTML = patternHtml(cur);
+    record(true, inp); showFeedback(true, `<small>${esc(cur.a)}</small>`);
+  } else if (cur.tries === 0) {
+    cur.tries = 1; cur.shown = Math.max(cur.shown, 2); $("#pattern").innerHTML = patternHtml(cur);
+    inp.classList.remove("wrong"); void inp.offsetWidth; inp.classList.add("wrong"); sndBad();
+    $("#fb").innerHTML = `<div class="feedback bad"><div class="msg">Try once more! Look at the letters above.</div></div>`;
+    inp.select();
+  } else {
+    inp.classList.add("wrong"); inp.disabled = true;
+    cur.shown = 99; $("#pattern").innerHTML = patternHtml(cur);
+    app.querySelectorAll("#typeform button").forEach(b => b.disabled = true);
+    record(false); showFeedback(false);
+  }
+}
+function hint() {
+  const cur = quiz.list[quiz.i];
+  cur.shown++; $("#pattern").innerHTML = patternHtml(cur); tone([520], .06);
+  $("#typed").focus();
+}
+function revealQA() {
+  const cur = quiz.list[quiz.i];
+  $("#qabox").innerHTML = `<div class="answerbox"><div class="key">${esc(cur.a)}</div>${cur.full ? `<p class="full">${esc(cur.full)}</p>` : ""}<p class="full" style="color:var(--muted);font-weight:700">From ${esc(TOPICS[cur.topic].ref)}</p></div>${cur.note ? `<div class="tip" style="background:var(--bad-bg);color:var(--ink)"><b>Note:</b> ${esc(cur.note)}</div>` : ""}`;
+  $("#qabtns").innerHTML = `<span style="font-weight:800">Did you know it?</span>
+    <button class="big" data-act="qaself" data-ok="1">Yes, I knew it</button>
+    <button class="big ghost" data-act="qaself" data-ok="0">Still learning</button>`;
+  $("#qabtns .big").focus({ preventScroll: true });
+}
+function next() {
+  if (quiz.i < quiz.list.length - 1) { quiz.i++; renderQ(); scrollTo(0, 0); }
+  else finish(quiz.id, starsFor(quiz.score, quiz.list.length), `${quiz.score} out of ${quiz.list.length}`, quiz.missed);
+}
+function starsFor(score, total) { const p = score / total; return p >= .9 ? 3 : p >= .7 ? 2 : p >= .4 ? 1 : 0; }
+function finish(id, stars, label, missed = []) {
+  saveBest(id, stars);
+  const msg = ["Keep practising, you can do it!", "Good start! Have another go.", "Really good! One more try for 3 stars?", "Perfect! You know this really well!"][stars];
+  let nextBtn = "";
+  if (id.startsWith("sec-")) {
+    const [, k, n] = id.split("-");
+    if (+n < sectionRounds(k).length) nextBtn = `<button class="big" data-act="start" data-id="sec-${k}-${+n + 1}">Next round</button>`;
+  }
+  app.innerHTML = topBar(backTo) + `
+    <section class="card result">
+      <div class="bigstars">${starIcons(stars)}</div>
+      <div class="score">${label}</div>
+      <h2>${msg}</h2>
+      ${missed.length ? `<div class="review"><div style="background:none;padding:0;font-weight:800">Remember these:</div>${missed.map(m => `<div>${esc(m.q.replace("___", "____"))}<br><b>${esc(m.a)}</b></div>`).join("")}</div>` : ""}
+      <div class="row" style="justify-content:center">
+        ${nextBtn}
+        <button class="big ${nextBtn ? "ghost" : ""}" data-act="start" data-id="${id}">Play again</button>
+        <button class="big ghost" data-act="${backTo}">${backTo === "home" ? "Home" : "All rounds"}</button>
+      </div>
+    </section>`;
+  scrollTo(0, 0);
+  if (stars === 3) { sndWin(); confetti(120); setTimeout(() => confetti(80, innerWidth * .25, innerHeight * .4), 300); setTimeout(() => confetti(80, innerWidth * .75, innerHeight * .4), 600); }
+  else if (stars) sndWin();
+}
+
+/* ---------- match ---------- */
+let mt = null;
+function startMatch(id, sets) {
+  setColor(id);
+  mt = { id, sets: shuffle(sets), round: 0, mistakes: 0 };
+  renderMatch();
+}
+function renderMatch() {
+  const set = mt.sets[mt.round];
+  mt.left = shuffle(set.pairs.map(p => p[0]));
+  mt.right = shuffle(set.pairs.map(p => p[1]));
+  mt.done = 0; mt.pick = null;
+  app.innerHTML = topBar(backTo) + `
+    <section class="card">
+      <div class="progress">${mt.sets.map((_, i) => `<i class="${i < mt.round ? "ok" : i === mt.round ? "now" : ""}"></i>`).join("")}</div>
+      <div class="qtop"><span class="kind">Match ${mt.round + 1} of ${mt.sets.length}</span><span class="streak" id="mist">${mt.mistakes ? mt.mistakes + (mt.mistakes === 1 ? " mistake" : " mistakes") : ""}</span></div>
+      <div class="question">${esc(set.name)}</div>
+      <div class="match">
+        <div class="col">${mt.left.map((t, i) => `<button class="opt" data-act="ml" data-i="${i}"><span class="let">${i + 1}</span><span>${esc(t)}</span></button>`).join("")}</div>
+        <div class="col">${mt.right.map((t, i) => `<button class="opt" data-act="mr" data-i="${i}"><span class="let">${"abcde"[i]}</span><span>${esc(t)}</span></button>`).join("")}</div>
+      </div>
+      <div id="fb"></div>
+    </section>`;
+}
+function matchTap(side, i, btn) {
+  if (btn.classList.contains("done")) return;
+  if (side === "l") {
+    app.querySelectorAll('[data-act="ml"]').forEach(b => b.classList.remove("picked"));
+    btn.classList.add("picked"); mt.pick = i; tone([520], .06); return;
+  }
+  if (mt.pick === null) { btn.classList.add("wrong"); setTimeout(() => btn.classList.remove("wrong"), 400); return; }
+  const set = mt.sets[mt.round];
+  const ok = set.pairs.some(p => p[0] === mt.left[mt.pick] && p[1] === mt.right[i]);
+  const lb = app.querySelector(`[data-act="ml"][data-i="${mt.pick}"]`);
+  if (ok) {
+    lb.classList.remove("picked"); lb.classList.add("done"); btn.classList.add("done");
+    lb.disabled = btn.disabled = true; mt.done++; mt.pick = null; sndGood(); burstAt(btn, 14);
+    if (mt.done === set.pairs.length) {
+      const last = mt.round === mt.sets.length - 1;
+      $("#fb").innerHTML = `<div class="feedback good"><div class="msg">All matched!</div><button class="big" data-act="mnext">${last ? "See my stars" : "Next match"}</button></div>`;
+      $("#fb button").focus({ preventScroll: true });
+      $("#fb").scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    }
+  } else {
+    mt.mistakes++; sndBad();
+    btn.classList.add("wrong"); setTimeout(() => btn.classList.remove("wrong"), 400);
+    $("#mist").textContent = mt.mistakes + (mt.mistakes === 1 ? " mistake" : " mistakes");
+  }
+}
+
+/* ---------- memory verses ---------- */
+let vs = null;
+const STEP_NAMES = ["Read it", "Put it in order", "Fill the gaps", "Whole verse"];
+function tokenize(v) {
+  const words = v.parts.join(" ").split(/\s+/);
+  return words.map(w => { const m = w.match(/^([^A-Za-z0-9]*)(.*?)([^A-Za-z0-9]*)$/); return { pre: m[1], core: m[2], post: m[3] }; });
+}
+function verseScreen(i, step) {
+  backTo = "home"; setColor(`v${i}`);
+  const v = VERSES[i], done = vdone[i] || [];
+  vs = { i, step, shown: step === 0 ? 1 : 99, covered: false };
+  const chips = STEP_NAMES.map((n, s) => `<button class="step ${s === step ? "on" : ""}" data-act="vstep" data-i="${s}">${s + 1}. ${n}${done[s] ? ' <span class="tick">&#10003;</span>' : ""}</button>`).join("");
+  app.innerHTML = topBar("home") + `
+    <section class="card">
+      <div class="storyhead"><span class="ico">${ICON.verse}</span><div><h2>${v.ref}</h2><div class="ref">Memory verse ${i + 1} of ${VERSES.length} · goes with "${TOPICS[v.story].title}"</div></div></div>
+      <div class="steps">${chips}</div>
+      <div id="vbody" style="display:flex;flex-direction:column;gap:14px"></div>
+    </section>`;
+  [vRead, vOrder, vGaps, vGaps][step](step);
+  scrollTo(0, 0);
+}
+function vRead() {
+  const v = VERSES[vs.i], allShown = vs.shown >= v.parts.length;
+  $("#vbody").innerHTML = `
+    <div class="verse ${vs.covered ? "covered" : ""}">${v.parts.map((p, j) => `<span class="ph ${j < vs.shown ? "" : "hidden"}">${esc(p)}</span>`).join(" ")}</div>
+    <div class="vref">${v.ref}</div>
+    <div class="row">
+      ${allShown ? "" : `<button class="big" data-act="vmore">Show the next part</button>`}
+      ${canSpeak ? `<button class="big ghost small" data-act="vspeak">Read it to me</button>` : ""}
+      ${allShown ? `<button class="big ghost small" data-act="vcover">${vs.covered ? "Show it again" : "Hide it and say it"}</button>` : ""}
+      ${allShown ? `<button class="big" data-act="vstep" data-i="1">Next: put it in order</button>` : ""}
+    </div>
+    <div class="tip">${allShown ? "Read it three times out loud. Then tap \"Hide it and say it\" and try to say it from memory." : "Read each part out loud before you show the next one."}</div>`;
+}
+function vOrder() {
+  const v = VERSES[vs.i];
+  vs.placed = 0; vs.tiles = shuffle(v.parts.map((p, j) => j)); vs.mist = 0;
+  drawOrder();
+}
+function drawOrder() {
+  const v = VERSES[vs.i];
+  $("#vbody").innerHTML = `
+    <p style="margin:0;font-weight:700">Tap the parts of the verse in the right order.</p>
+    <div class="built">${v.parts.slice(0, vs.placed).map(p => `<div>${esc(p)}</div>`).join("") || `<div style="background:var(--bg);color:var(--muted)">The verse will build up here…</div>`}</div>
+    <div class="tiles">${vs.tiles.filter(j => j >= vs.placed).map(j => `<button class="opt" data-act="vtile" data-j="${j}"><span>${esc(v.parts[j])}</span></button>`).join("")}</div>
+    <div id="fb"></div>`;
+  if (vs.placed === v.parts.length) verseStepDone(1, "You built the whole verse!", "Next: fill the gaps", 2);
+}
+function vTile(j, btn) {
+  if (j === vs.placed) { vs.placed++; sndGood(); burstAt(btn, 10); drawOrder(); }
+  else { vs.mist++; sndBad(); btn.classList.remove("wrong"); void btn.offsetWidth; btn.classList.add("wrong"); }
+}
+function vGaps(step) {
+  const v = VERSES[vs.i], toks = tokenize(v);
+  let hide;
+  if (step === 2) { let c = 0; hide = toks.map(t => t.core.length >= 4 && (c++ % 2 === 0)); }
+  else hide = toks.map(t => t.core.length >= 3);
+  vs.toks = toks; vs.hide = hide; vs.pos = hide.indexOf(true); vs.filled = new Set(); vs.refDone = step === 2;
+  drawGaps();
+}
+function drawGaps() {
+  const v = VERSES[vs.i], toks = vs.toks;
+  const html = toks.map((t, j) => vs.hide[j] && !vs.filled.has(j)
+      ? `${esc(t.pre)}<span class="gap ${j === vs.pos ? "now" : ""}">${"_".repeat(Math.max(3, t.core.length))}</span>${esc(t.post)}`
+      : (vs.hide[j] ? `${esc(t.pre)}<span class="gap filled">${esc(t.core)}</span>${esc(t.post)}` : esc(t.pre + t.core + t.post))).join(" ");
+  let opts = "", prompt = "";
+  if (vs.pos >= 0) {
+    const ans = toks[vs.pos].core, lc = ans.toLowerCase();
+    const pool = [...new Set(toks.filter((t, j) => vs.hide[j] && t.core.toLowerCase() !== lc).map(t => t.core))];
+    const extra = ["grace", "love", "people", "light", "heart", "word", "peace"].filter(w => w !== lc);
+    const d = shuffle(pool).concat(shuffle(extra)).filter((w, k, a) => a.findIndex(x => x.toLowerCase() === w.toLowerCase()) === k).slice(0, 2);
+    vs.opts = shuffle([ans, ...d]);
+    prompt = "Which word goes in the yellow gap?";
+    opts = vs.opts.map((w, k) => `<button class="opt" data-act="vgap" data-k="${k}"><span class="let">${"ABC"[k]}</span><span>${esc(w)}</span></button>`).join("");
+  } else if (!vs.refDone) {
+    vs.opts = shuffle([v.ref, ...shuffle(VERSES.filter(x => x !== v).map(x => x.ref)).slice(0, 2)]);
+    prompt = "Last one! Where is this verse in the Bible?";
+    opts = vs.opts.map((w, k) => `<button class="opt" data-act="vref" data-k="${k}"><span class="let">${"ABC"[k]}</span><span>${esc(w)}</span></button>`).join("");
+  }
+  $("#vbody").innerHTML = `
+    <div class="verse">${html}</div>
+    ${vs.refDone ? `<div class="vref">${v.ref}</div>` : `<div class="vref">______</div>`}
+    ${prompt ? `<p style="margin:0;font-weight:800">${prompt}</p><div class="opts">${opts}</div>` : ""}
+    <div id="fb"></div>`;
+  if (vs.pos < 0 && vs.refDone) {
+    if (vs.step === 2) verseStepDone(2, "Great! All the gaps are filled.", "Next: whole verse", 3);
+    else verseStepDone(3, "Wow! You said the whole verse!", "Next verse", "nextverse");
+  }
+}
+function vGap(k, btn) {
+  const w = vs.opts[k];
+  if (w.toLowerCase() === vs.toks[vs.pos].core.toLowerCase()) {
+    vs.filled.add(vs.pos); sndGood();
+    vs.pos = vs.hide.findIndex((h, j) => h && !vs.filled.has(j));
+    drawGaps();
+  } else { sndBad(); btn.classList.remove("wrong"); void btn.offsetWidth; btn.classList.add("wrong"); }
+}
+function vRef(k, btn) {
+  if (vs.opts[k] === VERSES[vs.i].ref) { vs.refDone = true; sndGood(); drawGaps(); }
+  else { sndBad(); btn.classList.remove("wrong"); void btn.offsetWidth; btn.classList.add("wrong"); }
+}
+function verseStepDone(s, msg, nextLabel, nextStep) {
+  const d = vdone[vs.i] || []; d[s] = true; vdone[vs.i] = d; store("ieq-vdone", vdone);
+  saveBest(`v${vs.i}`, [1, 2, 3].filter(x => d[x]).length);
+  const nextAct = nextStep === "nextverse"
+    ? (vs.i < VERSES.length - 1 ? `data-act="open" data-id="v${vs.i + 1}"` : `data-act="open" data-id="vquiz"`)
+    : `data-act="vstep" data-i="${nextStep}"`;
+  const nl = nextStep === "nextverse" && vs.i === VERSES.length - 1 ? "Try the Verse Challenge" : nextLabel;
+  $("#fb").innerHTML = `<div class="feedback good"><div class="msg">${msg}<small>You earned a star for this verse.</small></div><button class="big" ${nextAct}>${nl}</button></div>`;
+  sndWin(); confetti(70);
+  $("#fb button").focus({ preventScroll: true });
+}
+function verseQuestions() {
+  const qs = [];
+  VERSES.forEach((v, i) => {
+    qs.push({ k: "mc", label: "Which verse is it?", q: `"${v.parts.slice(0, 2).join(" ")}…"`, a: v.ref, opts: shuffle([v.ref, ...shuffle(VERSES.filter(x => x !== v).map(x => x.ref)).slice(0, 3)]) });
+    const j = Math.floor(Math.random() * (v.parts.length - 1));
+    const others = shuffle(VERSES.filter(x => x !== v).flatMap(x => x.parts)).slice(0, 3);
+    qs.push({ k: "mc", label: "What comes next?", q: `${v.ref}: "…${v.parts[j]}"`, a: v.parts[j + 1], opts: shuffle([v.parts[j + 1], ...others]) });
+  });
+  return shuffle(qs);
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const act = b.dataset.act, id = b.dataset.id;
+  if (act === "home") { home(); scrollTo(0, 0); }
+  else if (act.startsWith("back-sec-")) sectionPage(act.slice(9));
+  else if (act === "jump") document.getElementById(id).scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  else if (act === "sound") { soundOn = !soundOn; store("ieq-sound", soundOn); b.textContent = soundOn ? "Sound on" : "Sound off"; b.setAttribute("aria-pressed", soundOn); if (soundOn) sndGood(); }
+  else if (act === "open") {
+    if (TOPICS[id]) storyCard(id);
+    else if (id.startsWith("sec-")) sectionPage(id.slice(4));
+    else if (id === "exam") examIntro();
+    else if (id === "vquiz") start("vquiz");
+    else verseScreen(+id[1], 0);
+  }
+  else if (act === "start") start(id);
+  else if (act === "answer") answer(+b.dataset.i, b);
+  else if (act === "hint") hint();
+  else if (act === "reveal") revealQA();
+  else if (act === "qaself") { const ok = b.dataset.ok === "1"; record(ok, ok ? b : null); next(); }
+  else if (act === "next") next();
+  else if (act === "ml") matchTap("l", +b.dataset.i, b);
+  else if (act === "mr") matchTap("r", +b.dataset.i, b);
+  else if (act === "mnext") {
+    if (mt.round < mt.sets.length - 1) { mt.round++; renderMatch(); }
+    else finish(mt.id, mt.mistakes <= 1 ? 3 : mt.mistakes <= 4 ? 2 : 1, mt.mistakes === 0 ? "No mistakes!" : `${mt.mistakes} ${mt.mistakes === 1 ? "mistake" : "mistakes"}`);
+  }
+  else if (act === "vstep") verseScreen(vs.i, +b.dataset.i);
+  else if (act === "vmore") { vs.shown++; vRead(); if (canSpeak && soundOn) speak(VERSES[vs.i].parts[vs.shown - 1]); }
+  else if (act === "vspeak") speak(VERSES[vs.i].parts.slice(0, vs.shown).join(" ") + (vs.shown >= VERSES[vs.i].parts.length ? " " + VERSES[vs.i].ref.replace(":", ", verse ") : ""));
+  else if (act === "vcover") { vs.covered = !vs.covered; vRead(); }
+  else if (act === "vtile") vTile(+b.dataset.j, b);
+  else if (act === "vgap") vGap(+b.dataset.k, b);
+  else if (act === "vref") vRef(+b.dataset.k, b);
+});
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || !quiz || !app.querySelector('[data-act="answer"]')) return;
+  const i = "abcd".indexOf(e.key.toLowerCase());
+  const btn = app.querySelectorAll('[data-act="answer"]')[i];
+  if (btn && !btn.disabled) answer(i, btn);
+});
+home();
+</script>
+
+</body></html>
